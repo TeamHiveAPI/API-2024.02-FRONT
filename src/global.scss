@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+// Variáveis
+$cinza-claro: #F5F5F5;
+
+$primario: #003383;
+$primario-hover: #07285e;
+
+$vermelho: #ED3C5C;
+$vermelho-hover: #BA203C;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter";
+    text-decoration: none;
+    list-style-position: inside;
+    border: none;
+}
+
+body {
+  background-color: $cinza-claro;
+}
+
+.margem_10 {
+    margin: 0 10%;
+}
