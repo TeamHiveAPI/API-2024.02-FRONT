@@ -1,0 +1,21 @@
+@import "../../global.scss";
+
+.input_container {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    color: #303030;
+}
+
+.input_container input {
+    padding: 12px;
+    border: 1px solid #808080;
+    border-radius: 8px;
+    width: 400px;
+    font-size: 16px;
+}
+
+.input_container input:focus {
+    border: 1px solid #303030;
+    outline: none;
+}
