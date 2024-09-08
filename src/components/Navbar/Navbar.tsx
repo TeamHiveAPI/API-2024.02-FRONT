@@ -3,27 +3,11 @@ import "./Navbar.scss";
 
 function Navbar() {
   
-  const [Scrolou, setScrolou] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolou(true);
-      } else {
-        setScrolou(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   
   return (
     
-    <nav className={`nav_container ${Scrolou ? "scrolled" : ""}`}>
-        <div className={`nav_esq ${Scrolou ? "scrolled" : ""}`}>
+    <nav className="nav_container">
+        <div className="nav_esq">
             <img src="/img/logotipo_FAPG.svg" alt="Logo FAPG" />
         </div>
 
