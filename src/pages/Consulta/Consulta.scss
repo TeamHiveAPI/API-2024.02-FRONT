@@ -20,3 +20,40 @@
     margin-top: 80px !important;
     margin-bottom: 256px !important;
 }
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
+}
+
+th, td {
+    padding: 16px 0px;
+    text-align: left;
+    color: #303030;
+}
+
+th {
+    padding: 32px 0px;
+    border-bottom: 1px solid #C4C4C4;
+    font-weight: 600;
+}
+
+tr:nth-child(even) { background-color: #F5F5F5; }
+tr:nth-child(odd) { background-color: #FFFFFF; }
+
+td img {
+    margin-left: 16px;
+    width: 64px;
+    height: 64px;
+    background-color: $primario;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.referencia_projeto {
+    width: 40%;
+    padding-right: 32px;
+}
