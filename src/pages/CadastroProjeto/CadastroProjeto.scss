@@ -1,0 +1,52 @@
+@import "../../global.scss";
+
+h2 {
+    color: #003383;
+    margin-bottom: 2rem;
+}
+
+.cadpro_cadastro_projeto {
+    
+    .cadpro_input_group {
+        margin-bottom: 20px;
+
+        &.cadpro_horizontal {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .cadpro_input_item {
+            flex: 1;
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+.cadpro_botao_cadastrar {
+    display: flex;
+    justify-content: center;
+    margin-top: 64px;
+}
