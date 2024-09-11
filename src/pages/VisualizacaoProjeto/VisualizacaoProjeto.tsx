@@ -50,22 +50,22 @@ function VisualizacaoProjeto() {
                 <p>01/01/2024</p>
             </div>
         </div>
-        <div className="visu_propostas margem_10">
+        <div className="visu_arquivos margem_10">
             <h3>Propostas e Relatórios</h3>
             <div className="visu_cards">
                 <CardArquivo titulo="proposta1.pdf" tamanho="1.2MB"/>
                 <CardArquivo titulo="relatorio.pdf" tamanho="1.2MB"/>
             </div>
         </div>
-        <div className="visu_contratos margem_10">
+        <div className="visu_arquivos margem_10">
             <h3>Contratos</h3>
             <div className="visu_cards">
                 <CardArquivo titulo="contrato.pdf" tamanho="0.8MB"/>
             </div>
         </div>
-        <div className="visu_artigos margem_10">
+        <div className="visu_arquivos margem_10">
             <h3>Artigos</h3>
-            <p>Nenhum artigo encontrado.</p>
+            <p className="visu_nao_encontrado">Nenhum arquivo encontrado.</p>
         </div>
     </>
   );
