@@ -5,7 +5,7 @@
     padding: 20px;
     flex-direction: column;
     align-items: center;
-    border-radius: 4px;
+    border-radius: 8px;
     background: #F5F5F5;
     box-shadow: 0px 3px 0px 0px #C4C4C4;
     font-size: 20px; 
@@ -27,4 +27,9 @@
 
 .arq_container h6 {
     color: $primario;
+}
+
+.arq_container:hover {
+    filter: brightness(90%);
+    cursor: pointer;
 }

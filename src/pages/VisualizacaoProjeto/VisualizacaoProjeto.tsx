@@ -1,6 +1,7 @@
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import CardArquivo from "../../components/CardArquivo/CardArquivo";
 import Navbar from "../../components/Navbar/Navbar";
+import SecaoCima from "../../components/SecaoCima/SecaoCima";
 import "./VisualizacaoProjeto.scss"
 
 
@@ -10,10 +11,8 @@ function VisualizacaoProjeto() {
     <>
       <Navbar />
 
-        <div className="visu_container_cima margem_10">
-            <h2>Informações do Projeto</h2>
-            <BotaoCTA escrito="Voltar" aparencia="primario" />
-        </div>
+        <SecaoCima titulo="Informações do Projeto"/>
+
         <div className="visu_container_info margem_10">
             <div className="visu_info_linha">
                 <h3>Referência do Projeto</h3>

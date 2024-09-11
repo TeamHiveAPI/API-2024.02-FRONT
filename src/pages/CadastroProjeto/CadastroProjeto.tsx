@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
-import SubirArquivo from "../../components/SubirArquivo/SubirArquivo"; // Importando o componente SubirArquivo
+import SubirArquivo from "../../components/SubirArquivo/SubirArquivo";
+import SecaoCima from "../../components/SecaoCima/SecaoCima";
 import "../CadastroProjeto/CadastroProjeto.scss";
 
 function CadastroProjeto() {
@@ -9,8 +10,9 @@ function CadastroProjeto() {
       <>
         <Navbar />
 
+        <SecaoCima titulo="Cadastrar Novo Projeto" />
         <div className="visu_container_info margem_10">
-            <h2>Informações Principais</h2>
+            <h2 className="testezinho">Informações Principais</h2>
 
             <form className="cadpro_cadastro_projeto">
                 <div className="cadpro_input_group">
@@ -53,8 +55,8 @@ function CadastroProjeto() {
             <SubirArquivo titulo="Contratos" />
             <SubirArquivo titulo="Artigos" />
 
-            <div className='cadpro_botao_cadastrar'>
-                <BotaoCTA escrito='Cadastrar' aparencia='primario' img=''/>
+            <div className="cadpro_botao_cadastrar">
+                <BotaoCTA img="img/salvar.svg" escrito="Cadastrar" aparencia="primario"/>
             </div>
         </div>
 
