@@ -2,9 +2,15 @@
 
 .input_container {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 32px;
     color: #303030;
+    text-align: right;
+}
+
+.input_container > * {
+    flex: 1 1 50px;    
 }
 
 .input_container input {

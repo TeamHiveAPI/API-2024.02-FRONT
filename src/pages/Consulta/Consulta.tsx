@@ -3,18 +3,26 @@ import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
 import "../../global.scss"
 import "./Consulta.scss"
+import "../../components/Input/Input.scss"; 
 
 function Consulta() {
     
   return (
     <>
       <Navbar />
-
+      
       <div className="margem_10 cons_container">
-      <Input texto="Mude o Texto Aqui" placeholder="Digite aqui..." />
-      <Input texto="Mude o Texto Aqui" placeholder="Digite aqui..." />
-      <Input texto="Mude o Texto Aqui" placeholder="Digite aqui..." />
-      <Input texto="Mude o Texto Aqui" placeholder="Digite aqui..." />
+        <h1>Consulta de Projetos</h1>
+      </div>
+
+      <div className="margem_10 cons_container input_container">
+      <Input texto="Referência do Projeto" placeholder="Digite aqui..." />
+      <Input texto="Coordenador" placeholder="Digite aqui..." />
+      <Input texto="Data de Início" placeholder="Digite aqui..." />
+      <Input texto="Data de Término" placeholder="Digite aqui..." />
+      <Input texto="Classificação" placeholder="Digite aqui..." />
+      <Input texto="Situação do Projeto" placeholder="Digite aqui..." />
+      <BotaoCTA escrito="Buscar" aparencia="primario"/>
       </div>
 
       <table className="margem_10">
