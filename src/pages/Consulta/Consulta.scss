@@ -59,6 +59,11 @@ td img {
     border-radius: 4px;
 }
 
+td img:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}
+
 .referencia_projeto {
     width: 40%;
     padding-right: 32px;

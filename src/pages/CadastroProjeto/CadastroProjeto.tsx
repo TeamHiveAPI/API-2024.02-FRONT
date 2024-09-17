@@ -24,9 +24,13 @@ function CadastroProjeto() {
   // Função para atualizar os estados com os valores do formulário
   const handleChange = (e: any) => {
     const { id, value } = e.target;
+  
+    // Verificar se o campo é o valor do projeto e fazer a conversão para número
+    const newValue = id === "valorProjeto" ? parseFloat(value) || 0 : value;
+  
     setProjeto((prevState) => ({
       ...prevState,
-      [id]: value,
+      [id]: newValue,
     }));
   };
 
@@ -122,38 +126,22 @@ function CadastroProjeto() {
             <div className="cadpro_secao">
                 <div className="cadpro_input">
               <label htmlFor="dataInicio">Data de Início</label>
-              <input
-                type="date"
-                id="dataInicio"
-                value={projeto.dataInicio}
-                onChange={handleChange}
-              />
+              <input type="date" id="dataInicio" value={projeto.dataInicio} onChange={handleChange} />
                 </div>
                 <div className="cadpro_input">
               <label htmlFor="dataTermino">Data de Término</label>
-              <input
-                type="date"
-                id="dataTermino"
-                value={projeto.dataTermino}
-                onChange={handleChange}
-              />
+              <input type="date" id="dataTermino" value={projeto.dataTermino} onChange={handleChange} />
                 </div>
                 <div className="cadpro_input">
               <label htmlFor="valorProjeto">Valor do Projeto</label>
-              <input
-                type="text"
-                id="valorProjeto"
-                placeholder="Digite aqui..."
-                value={projeto.valorProjeto}
-                onChange={handleChange}
-              />
+              <input type="number" id="valorProjeto" placeholder="Digite aqui..." value={projeto.valorProjeto} onChange={handleChange} />
                 </div>
             </div>
         </form>
 
-        <SubirArquivo titulo="Propostas e Relatórios Técnicos" />
+        <SubirArquivo titulo="Planos de Trabalho" />
         <SubirArquivo titulo="Contratos" />
-        <SubirArquivo titulo="Artigos" />
+        <SubirArquivo titulo="Termos Aditivos" />
 
         <div className="cadpro_botao_cadastrar" onClick={handleSubmit}>
           <BotaoCTA
