@@ -8,6 +8,11 @@ import "./Consulta.scss";
 import "../../components/Input/Input.scss"; 
 
 function Consulta() {
+
+  function formatarData(data: any) {
+    const [ano, mes, dia] = data.split('-');
+    return `${dia}/${mes}/${ano}`;
+  }
   
   useEffect(() => {
     
@@ -26,10 +31,10 @@ function Consulta() {
             const linha = document.createElement("tr");
 
             linha.innerHTML = `
-              <td><img src="img/nuvem_upload.svg" /></td>
+              <td><img src="img/detalhe_arquivo.svg" /></td>
               <td class="referencia_projeto">${projeto.referencia}</td>
-              <td>${projeto.dataInicio}</td>
-              <td>${projeto.dataTermino}</td>
+              <td>${formatarData(projeto.dataInicio)}</td>
+              <td>${formatarData(projeto.dataTermino)}</td>
               <td>${projeto.coordenador}</td>
               <td>R$${projeto.valor.toFixed(2)}</td> ` ;
 
@@ -49,18 +54,18 @@ function Consulta() {
     <>
       <Navbar />
       
-      <div className="margem_10 cons_container">
+      <div className="margem_10 cons_container mtop80">
         <h1>Consulta de Projetos</h1>
       </div>
 
-      <div className="margem_10 cons_container input_container">
+      <div className="margem_10 cons_container ">
         <Input texto="Referência do Projeto" placeholder="Digite aqui..." />
         <Input texto="Coordenador" placeholder="Digite aqui..." />
         <Input texto="Data de Início" placeholder="Digite aqui..." />
         <Input texto="Data de Término" placeholder="Digite aqui..." />
         <Input texto="Classificação" placeholder="Digite aqui..." />
         <Input texto="Situação do Projeto" placeholder="Digite aqui..." />
-        <BotaoCTA escrito="Buscar" aparencia="primario"/>
+        <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario"/>
       </div>
 
       <table className="margem_10">
