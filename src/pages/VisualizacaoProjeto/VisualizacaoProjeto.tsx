@@ -50,7 +50,7 @@ function VisualizacaoProjeto() {
             </div>
         </div>
         <div className="visu_arquivos margem_10">
-            <h3>Propostas e Relatórios</h3>
+            <h3>Planos de Trabalho</h3>
             <div className="visu_cards">
                 <CardArquivo titulo="proposta1.pdf" tamanho="1.2MB"/>
                 <CardArquivo titulo="relatorio.pdf" tamanho="1.2MB"/>
@@ -63,7 +63,7 @@ function VisualizacaoProjeto() {
             </div>
         </div>
         <div className="visu_arquivos margem_10">
-            <h3>Artigos</h3>
+            <h3>Termos Aditivos</h3>
             <p className="visu_nao_encontrado">Nenhum arquivo encontrado.</p>
         </div>
     </>

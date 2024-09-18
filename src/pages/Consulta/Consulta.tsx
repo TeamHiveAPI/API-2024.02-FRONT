@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
-import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
 import "../../global.scss";
 import "./Consulta.scss";
@@ -59,13 +58,41 @@ function Consulta() {
       </div>
 
       <div className="margem_10 cons_container ">
-        <Input texto="Referência do Projeto" placeholder="Digite aqui..." />
-        <Input texto="Coordenador" placeholder="Digite aqui..." />
-        <Input texto="Data de Início" placeholder="Digite aqui..." />
-        <Input texto="Data de Término" placeholder="Digite aqui..." />
-        <Input texto="Classificação" placeholder="Digite aqui..." />
-        <Input texto="Situação do Projeto" placeholder="Digite aqui..." />
-        <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario"/>
+        <div className="cons_barra_pesquisa">
+          <input type="text" placeholder="Pesquisar"></input>
+          <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario"/>
+        </div>
+          <div className="cons_explicacao">
+            <h4>Pesquise por palavras-chave. É possível pesquisar pelos seguintes tópicos:</h4>
+            <div className="cons_topicos">
+              <div className="cons_topicos_esq">
+                <h4>Referência do Projeto</h4>
+                <h4>Coordenador</h4>
+                <div className="cons_topico_detalhe">
+                  <h5>Classificação</h5>
+                  <div>
+                    <p className="cons_detalhe">• Contrato</p>
+                    <p className="cons_detalhe">• Convênio</p>
+                    <p className="cons_detalhe">• Patrocínio</p>
+                    <p className="cons_detalhe">• Termo de Cooperação</p>
+                    <p className="cons_detalhe">• Termo de Outorga</p>
+                  </div>
+                </div>
+              </div>
+              <div className="cons_topicos_dir">
+                <h4>Data de Início</h4>
+                <h4>Data de Término</h4>
+                <div className="cons_topico_detalhe">
+                  <h5>Situação do Projeto</h5>
+                  <div>
+                    <p className="cons_detalhe">• Projetos Não Iniciados</p>
+                    <p className="cons_detalhe">• Projetos em Andamento</p>
+                    <p className="cons_detalhe">• Projetos Encerrados</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
 
       <table className="margem_10">
