@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios, { AxiosError, AxiosResponse } from "axios"; 
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import Navbar from "../../components/Navbar/Navbar";
@@ -9,6 +10,7 @@ import "./Login.scss";
 function Login() {
     const [email, setEmail] = useState("");  // Estado para armazenar o email
     const [senha, setSenha] = useState("");  // Estado para armazenar a senha
+    const navigate = useNavigate();  // Hook para redirecionamento
 
     // Função para realizar o login
     const handleLogin = () => {
@@ -24,6 +26,7 @@ function Login() {
                 // Se o login for bem-sucedido
                 alert("Login realizado com sucesso!");
                 console.log(response.data);
+                navigate("/consulta");  // Redireciona para a página de consulta
             })
             .catch((error: AxiosError) => {  // Tipagem explícita para 'error'
                 // Se houver um erro no login
