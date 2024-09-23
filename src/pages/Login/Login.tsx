@@ -19,7 +19,7 @@ function Login() {
         };
 
         // Enviando a requisição POST para o backend
-        axios.post('http://localhost:8080/login', dadosLogin)
+        axios.post('http://localhost:8080/usuarios/login', dadosLogin)
             .then((response: AxiosResponse) => {  // Tipagem explícita para 'response'
                 // Se o login for bem-sucedido
                 alert("Login realizado com sucesso!");

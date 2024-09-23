@@ -17,37 +17,71 @@ function CadastroProjeto() {
     descricao: "",
     dataInicio: "",
     dataTermino: "",
-    valorProjeto: "",
+    valor: "",
     classificacao: "",
   });
+
+  // Estado para armazenar o arquivo
+  const [arquivo, setArquivo] = useState<File | null>(null); // Define arquivo como null inicialmente
+
+  // Função para capturar o arquivo
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setArquivo(e.target.files[0]); // Pega o primeiro arquivo selecionado
+    }
+  };
 
   // Função para atualizar os estados com os valores do formulário
   const handleChange = (e: any) => {
     const { id, value } = e.target;
-  
-    // Verificar se o campo é o valor do projeto e fazer a conversão para número
-    const newValue = id === "valorProjeto" ? parseFloat(value) || 0 : value;
-  
-    setProjeto((prevState) => ({
-      ...prevState,
-      [id]: newValue,
-    }));
-  };
 
-  // Função para enviar o formulário para o back-end
+    // Verificar se o campo é o valor do projeto e fazer a conversão para número
+    const newValue = id === "valor" ? parseFloat(value) || 0 : value;
+
+    setProjeto((prevState) => ({
+        ...prevState,
+        [id]: newValue,
+    }));
+};
+
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8080/projetos", projeto)
-      .then((response) => {
-        alert("Projeto cadastrado com sucesso!");
-        console.log(response.data);
-      })
-      .catch((error) => {
-        alert("Erro ao cadastrar o projeto.");
-        console.error(error);
-      });
-  };
+
+    if (arquivo && arquivo.size > 0) {
+        // Se houver arquivo, envia como multipart/form-data
+        const formData = new FormData();
+        formData.append('projeto', JSON.stringify(projeto));
+        formData.append('arquivo', arquivo);
+
+        axios.post('http://localhost:8080/projetos', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+        .then((response) => {
+            alert("Projeto com arquivo cadastrado com sucesso!");
+            console.log(response.data);
+        })
+        .catch((error) => {
+            alert("Erro ao cadastrar o projeto com arquivo.");
+            console.error(error);
+        });
+
+    } else {
+        // Se não houver arquivo, envia como JSON simples
+        axios.post('http://localhost:8080/projetos', projeto)
+        .then((response) => {
+            alert("Projeto sem arquivo cadastrado com sucesso!");
+            console.log(response.data);
+        })
+        .catch((error) => {
+            alert("Erro ao cadastrar o projeto sem arquivo.");
+            console.error(error);
+        });
+    }
+};
+
 
 
 
@@ -133,9 +167,16 @@ function CadastroProjeto() {
               <input type="date" id="dataTermino" value={projeto.dataTermino} onChange={handleChange} />
                 </div>
                 <div className="cadpro_input">
-              <label htmlFor="valorProjeto">Valor do Projeto</label>
-              <input type="number" id="valorProjeto" placeholder="Digite aqui..." value={projeto.valorProjeto} onChange={handleChange} />
-                </div>
+                <label htmlFor="valor">Valor do Projeto</label>
+                <input 
+                  type="number" 
+                  id="valor"
+                  placeholder="Digite aqui..." 
+                  value={projeto.valor} 
+                  onChange={handleChange} 
+                />
+              </div>
+
             </div>
         </form>
 
