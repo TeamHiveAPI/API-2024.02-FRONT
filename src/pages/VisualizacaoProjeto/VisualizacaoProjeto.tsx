@@ -1,71 +1,79 @@
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import CardArquivo from "../../components/CardArquivo/CardArquivo";
 import Navbar from "../../components/Navbar/Navbar";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"; // Para pegar o ID da URL
+import axios from "axios";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
-import "./VisualizacaoProjeto.scss"
-
+import "./VisualizacaoProjeto.scss";
 
 function VisualizacaoProjeto() {
-    
-    return (
+  const { id } = useParams(); // Captura o id da URL
+  const [projeto, setProjeto] = useState<any>(null); // Estado para armazenar o projeto
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    // Função para buscar os detalhes do projeto
+    async function carregarProjeto() {
+      try {
+        const response = await axios.get(`http://localhost:8080/projetos/${id}`);
+        setProjeto(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar o projeto:", error);
+      }
+    }
+
+    carregarProjeto();
+  }, [id]);
+
+  if (!projeto) {
+    return <p>Carregando...</p>;
+  }
+
+  return (
     <>
       <Navbar />
 
-        <SecaoCima titulo="Informações do Projeto"/>
+      <SecaoCima titulo="Informações do Projeto" />
 
-        <div className="visu_container_info margem_10">
-            <div className="visu_info_linha">
-                <h3>Referência do Projeto</h3>
-                <p>Conduto Transdimensional para Manipulação Crono-espacial e Interconexão Instantânea</p>
-            </div>
-            <hr className="divisoria"/>
-            <div className="visu_info_linha">
-                <h3>Empresa</h3>
-                <p>Aperture Laboratories</p>
-            </div>
-            <hr className="divisoria"/>
-            <div className="visu_info_linha">
-                <h3>Descrição</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, aliquid est perspiciatis doloribus tenetur quae. Numquam iste atque voluptate obcaecati, ipsa error assumenda culpa hic accusantium voluptas quisquam unde sint?</p>
-            </div>
-            <hr className="divisoria"/>
-            <div className="visu_info_linha">
-                <h3>Coordenador</h3>
-                <p>Cave Johnson</p>
-            </div>
-            <hr className="divisoria"/>
-            <div className="visu_info_linha">
-                <h3>Valor do Projeto</h3>
-                <p>124.000,00</p>
-            </div>
-            <hr className="divisoria"/>
-            <div className="visu_info_linha">
-                <h3>Data de Inicio</h3>
-                <p>01/01/2024</p>
-            </div>
-            <hr className="divisoria"/>
-            <div className="visu_info_linha">
-                <h3>Data de Término</h3>
-                <p>01/01/2024</p>
-            </div>
+      <div className="visu_container_info margem_10">
+        <div className="visu_info_linha">
+          <h3>Referência do Projeto</h3>
+          <p>{projeto.referencia}</p>
         </div>
-        <div className="visu_arquivos margem_10">
-            <h3>Planos de Trabalho</h3>
-            <div className="visu_cards">
-                <CardArquivo titulo="proposta1.pdf" tamanho="1.2MB"/>
-                <CardArquivo titulo="relatorio.pdf" tamanho="1.2MB"/>
-            </div>
+        <hr className="divisoria" />
+        <div className="visu_info_linha">
+          <h3>Empresa</h3>
+          <p>{projeto.empresa}</p>
         </div>
-        <div className="visu_arquivos margem_10">
-            <h3>Contratos</h3>
-            <div className="visu_cards">
-                <CardArquivo titulo="contrato.pdf" tamanho="0.8MB"/>
-            </div>
+        <hr className="divisoria" />
+        <div className="visu_info_linha">
+          <h3>Descrição</h3>
+          <p>{projeto.descricao}</p>
         </div>
-        <div className="visu_arquivos margem_10">
-            <h3>Termos Aditivos</h3>
-            <p className="visu_nao_encontrado">Nenhum arquivo encontrado.</p>
+        <hr className="divisoria" />
+        <div className="visu_info_linha">
+          <h3>Coordenador</h3>
+          <p>{projeto.coordenador}</p>
         </div>
+        <hr className="divisoria" />
+        <div className="visu_info_linha">
+          <h3>Valor do Projeto</h3>
+          <p>R${projeto.valor.toFixed(2)}</p>
+        </div>
+        <hr className="divisoria" />
+        <div className="visu_info_linha">
+          <h3>Data de Início</h3>
+          <p>{projeto.dataInicio}</p>
+        </div>
+        <hr className="divisoria" />
+        <div className="visu_info_linha">
+          <h3>Data de Término</h3>
+          <p>{projeto.dataTermino}</p>
+        </div>
+      </div>
+      {/* Outros componentes, como arquivos e termos aditivos */}
     </>
   );
 }

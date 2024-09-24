@@ -14,6 +14,7 @@ export default function AppRoutes() {
         <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/projeto/:id" element={<VisualizacaoProjeto />} />
         <Route path="/consulta" element={<Consulta />} />
         <Route path="/detalhes" element={<VisualizacaoProjeto />} />
         <Route path="/cadastro-projeto" element={<CadastroProjeto />} />

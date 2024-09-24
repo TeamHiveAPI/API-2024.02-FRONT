@@ -2,40 +2,45 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import Navbar from "../../components/Navbar/Navbar";
+import { useNavigate } from "react-router-dom"; // Importar o hook useNavigate
 import "../../global.scss";
 import "./Consulta.scss";
 import "../../components/Input/Input.scss"; 
 
 function Consulta() {
+  const navigate = useNavigate(); // Instanciar o hook
 
   function formatarData(data: any) {
-    const [ano, mes, dia] = data.split('-');
+    const [ano, mes, dia] = data.split("-");
     return `${dia}/${mes}/${ano}`;
   }
-  
+
   useEffect(() => {
-    
     async function carregarTabelaConsulta() {
       try {
         const response = await axios.get("http://localhost:8080/projetos");
         const projetos = response.data;
 
         const tabela = document.querySelector("tbody");
-      
+
         if (tabela) {
           tabela.innerHTML = ""; // Limpar o conteúdo da tabela passada
 
           // Itera sobre cada projeto e insere na tabela
-          projetos.forEach((projeto: { referencia: any; dataInicio: any; dataTermino: any; coordenador: any; valor: number; }) => {
+          projetos.forEach((projeto: { id: any; referencia: any; dataInicio: any; dataTermino: any; coordenador: any; valor: number }) => {
             const linha = document.createElement("tr");
 
             linha.innerHTML = `
-              <td><img src="img/detalhe_arquivo.svg" /></td>
+              <td><img src="img/detalhe_arquivo.svg" class="detalhe_projeto" /></td>
               <td class="referencia_projeto">${projeto.referencia}</td>
               <td>${formatarData(projeto.dataInicio)}</td>
               <td>${formatarData(projeto.dataTermino)}</td>
               <td>${projeto.coordenador}</td>
-              <td>R$${projeto.valor.toFixed(2)}</td> ` ;
+              <td>R$${projeto.valor.toFixed(2)}</td>`;
+
+            linha.querySelector(".detalhe_projeto")?.addEventListener("click", () => {
+              navigate(`/projeto/${projeto.id}`); // Redirecionar para a página do projeto específico
+            });
 
             tabela.appendChild(linha);
           });
@@ -44,28 +49,27 @@ function Consulta() {
         console.error("Erro ao carregar os projetos:", error);
       }
     }
-    
-    // Provisoriamente já colocar todos os projetos na tabela para fins de teste
+
     carregarTabelaConsulta();
-  }, []);
+  }, [navigate]);
 
   return (
     <>
       <Navbar />
-      
+
       <div className="margem_10 cons_container mtop80">
         <h1>Consulta de Projetos</h1>
       </div>
 
       <div className="margem_10 cons_container ">
         <div className="cons_barra_pesquisa">
-          <input type="text" placeholder="Pesquisar"></input>
-          <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario"/>
+          <input type="text" placeholder="Pesquisar" />
+          <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario" />
         </div>
-          <div className="cons_explicacao">
-            <h4>Pesquise por palavras-chave. É possível pesquisar pelos seguintes tópicos:</h4>
-            <div className="cons_topicos">
-              <div className="cons_topicos_esq">
+        <div className="cons_explicacao">
+          <h4>Pesquise por palavras-chave. É possível pesquisar pelos seguintes tópicos:</h4>
+          <div className="cons_topicos">
+          <div className="cons_topicos_esq">
                 <h4>Referência do Projeto</h4>
                 <h4>Coordenador</h4>
                 <div className="cons_topico_detalhe">
@@ -94,6 +98,7 @@ function Consulta() {
             </div>
           </div>
       </div>
+        
 
       <table className="margem_10">
         <thead>
@@ -107,9 +112,7 @@ function Consulta() {
           </tr>
         </thead>
         <tbody>
-
-        {/* A função CarregarTabelaConsulta vai inserir linhas aqui */}
-
+          {/* A função carregarTabelaConsulta vai inserir linhas aqui */}
         </tbody>
       </table>
     </>

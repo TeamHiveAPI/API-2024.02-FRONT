@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";  
 import Navbar from "../../components/Navbar/Navbar";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import SubirArquivo from "../../components/SubirArquivo/SubirArquivo";
@@ -8,6 +9,8 @@ import "../CadastroProjeto/CadastroProjeto.scss";
 
 function CadastroProjeto() {
   
+  const navigate = useNavigate(); // Inicializa o useNavigate
+
   // Estados para armazenar os dados do formulário
   const [projeto, setProjeto] = useState({
     referencia: "",
@@ -42,8 +45,7 @@ function CadastroProjeto() {
         ...prevState,
         [id]: newValue,
     }));
-};
-
+  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -62,6 +64,7 @@ function CadastroProjeto() {
         .then((response) => {
             alert("Projeto com arquivo cadastrado com sucesso!");
             console.log(response.data);
+            navigate("/consulta"); // Redireciona para a página de consulta
         })
         .catch((error) => {
             alert("Erro ao cadastrar o projeto com arquivo.");
@@ -74,16 +77,14 @@ function CadastroProjeto() {
         .then((response) => {
             alert("Projeto sem arquivo cadastrado com sucesso!");
             console.log(response.data);
+            navigate("/consulta"); // Redireciona para a página de consulta
         })
         .catch((error) => {
             alert("Erro ao cadastrar o projeto sem arquivo.");
             console.error(error);
         });
     }
-};
-
-
-
+  };
 
   // Input Comentário
   const LimiteCaracteres = 2400;
@@ -111,8 +112,7 @@ function CadastroProjeto() {
             <div className="cadpro_secao">
                 <div className="cadpro_input maior">
               <label htmlFor="referencia">Referência do Projeto</label>
-              <input type="text" id="referencia" placeholder="Digite aqui..." value={projeto.referencia} onChange={handleChange}
-              />
+              <input type="text" id="referencia" placeholder="Digite aqui..." value={projeto.referencia} onChange={handleChange} />
                 </div>
                 <div className="cadpro_input menor">
               <label htmlFor="status">Situação do Projeto</label>
@@ -176,7 +176,6 @@ function CadastroProjeto() {
                   onChange={handleChange} 
                 />
               </div>
-
             </div>
         </form>
 
