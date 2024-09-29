@@ -1,57 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom"; // Importar o hook useNavigate
 import "../../global.scss";
 import "./Consulta.scss";
-import "../../components/Input/Input.scss"; 
+import "../../components/Input/Input.scss";
+
+interface Projeto {
+  id: number;
+  referencia: string;
+  dataInicio: string;
+  dataTermino: string;
+  coordenador: string;
+  valor: number;
+}
 
 function Consulta() {
   const navigate = useNavigate(); // Instanciar o hook
+
+  const [termoPesquisa, setTermoPesquisa] = useState(""); // Armazena o termo de pesquisa
+  const [projetos, setProjetos] = useState<Projeto[]>([]);
 
   function formatarData(data: any) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}/${mes}/${ano}`;
   }
 
+  const handleSearch = () => {
+    console.log("Botão de busca foi clicado"); // Verifique no console do navegador
+    axios.get('http://localhost:8080/projetos/search', {
+      params: { 
+        coordenador: termoPesquisa  // Aqui pode adicionar mais parâmetros
+      }
+    })
+    .then(response => {
+      console.log(response.data); // Verifique se os dados estão retornando do backend
+      setProjetos(response.data);  // Armazenar os projetos retornados
+    })
+    .catch(error => {
+      console.error("Erro ao buscar projetos:", error);
+    });
+  }
+
   useEffect(() => {
     async function carregarTabelaConsulta() {
       try {
+        // Faz a requisição para obter os projetos
         const response = await axios.get("http://localhost:8080/projetos");
-        const projetos = response.data;
-
-        const tabela = document.querySelector("tbody");
-
-        if (tabela) {
-          tabela.innerHTML = ""; // Limpar o conteúdo da tabela passada
-
-          // Itera sobre cada projeto e insere na tabela
-          projetos.forEach((projeto: { id: any; referencia: any; dataInicio: any; dataTermino: any; coordenador: any; valor: number }) => {
-            const linha = document.createElement("tr");
-
-            linha.innerHTML = `
-              <td><img src="img/detalhe_arquivo.svg" class="detalhe_projeto" /></td>
-              <td class="referencia_projeto">${projeto.referencia}</td>
-              <td>${formatarData(projeto.dataInicio)}</td>
-              <td>${formatarData(projeto.dataTermino)}</td>
-              <td>${projeto.coordenador}</td>
-              <td>R$${projeto.valor.toFixed(2)}</td>`;
-
-            linha.querySelector(".detalhe_projeto")?.addEventListener("click", () => {
-              navigate(`/projeto/${projeto.id}`); // Redirecionar para a página do projeto específico
-            });
-
-            tabela.appendChild(linha);
-          });
-        }
+        setProjetos(response.data); // Atualiza o estado com os projetos retornados
       } catch (error) {
         console.error("Erro ao carregar os projetos:", error);
       }
     }
-
-    carregarTabelaConsulta();
-  }, [navigate]);
+  
+    carregarTabelaConsulta(); // Chama a função para carregar os projetos ao montar o componente
+  }, [navigate]); // 'navigate' é uma dependência, o efeito será reexecutado se 'navigate' mudar
+  
 
   return (
     <>
@@ -63,8 +68,9 @@ function Consulta() {
 
       <div className="margem_10 cons_container ">
         <div className="cons_barra_pesquisa">
-          <input type="text" placeholder="Pesquisar" />
-          <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario" />
+          <input type="text" placeholder="Pesquisar" value={termoPesquisa}
+            onChange={(e) => setTermoPesquisa(e.target.value)}/>
+          <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario" onClick={handleSearch} />
         </div>
         <div className="cons_explicacao">
           <h4>Pesquise por palavras-chave. É possível pesquisar pelos seguintes tópicos:</h4>
@@ -101,20 +107,41 @@ function Consulta() {
         
 
       <table className="margem_10">
-        <thead>
-          <tr>
-            <th> </th>
-            <th>Referência do Projeto</th>
-            <th>Início</th>
-            <th>Término</th>
-            <th>Coordenador</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* A função carregarTabelaConsulta vai inserir linhas aqui */}
-        </tbody>
-      </table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Referência do Projeto</th>
+      <th>Início</th>
+      <th>Término</th>
+      <th>Coordenador</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    {projetos.length > 0 ? (
+      projetos.map((projeto) => (
+        <tr key={projeto.id}>
+          <td><img 
+  src="img/detalhe_arquivo.svg" 
+  alt="detalhe" 
+  className="detalhe_projeto" 
+  onClick={() => navigate(`/projeto/${projeto.id}`)} // Redireciona ao clicar na imagem
+/></td>
+          <td>{projeto.referencia}</td>
+          <td>{formatarData(projeto.dataInicio)}</td>
+          <td>{formatarData(projeto.dataTermino)}</td>
+          <td>{projeto.coordenador}</td>
+          <td>R${projeto.valor.toFixed(2)}</td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan={6}>Nenhum projeto encontrado.</td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
     </>
   );
 }
