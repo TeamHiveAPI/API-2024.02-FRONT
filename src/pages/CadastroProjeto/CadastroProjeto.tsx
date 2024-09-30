@@ -49,42 +49,44 @@ function CadastroProjeto() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
+    
+    console.log(projeto); // Verifique se a descrição está presente no objeto projeto
+  
     if (arquivo && arquivo.size > 0) {
-        // Se houver arquivo, envia como multipart/form-data
-        const formData = new FormData();
-        formData.append('projeto', JSON.stringify(projeto));
-        formData.append('arquivo', arquivo);
-
-        axios.post('http://localhost:8080/projetos', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-        .then((response) => {
-            alert("Projeto com arquivo cadastrado com sucesso!");
-            console.log(response.data);
-            navigate("/consulta"); // Redireciona para a página de consulta
-        })
-        .catch((error) => {
-            alert("Erro ao cadastrar o projeto com arquivo.");
-            console.error(error);
-        });
-
+      // Se houver arquivo, envia como multipart/form-data
+      const formData = new FormData();
+      formData.append('projeto', JSON.stringify(projeto)); // Certifique-se de serializar o objeto
+      formData.append('arquivo', arquivo);
+  
+      axios.post('http://localhost:8080/projetos', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        alert("Projeto com arquivo cadastrado com sucesso!");
+        console.log(response.data);
+        navigate("/consulta"); // Redireciona para a página de consulta
+      })
+      .catch((error) => {
+        alert("Erro ao cadastrar o projeto com arquivo.");
+        console.error(error);
+      });
     } else {
-        // Se não houver arquivo, envia como JSON simples
-        axios.post('http://localhost:8080/projetos', projeto)
-        .then((response) => {
-            alert("Projeto sem arquivo cadastrado com sucesso!");
-            console.log(response.data);
-            navigate("/consulta"); // Redireciona para a página de consulta
-        })
-        .catch((error) => {
-            alert("Erro ao cadastrar o projeto sem arquivo.");
-            console.error(error);
-        });
+      // Se não houver arquivo, envia como JSON simples
+      axios.post('http://localhost:8080/projetos', projeto)
+      .then((response) => {
+        alert("Projeto sem arquivo cadastrado com sucesso!");
+        console.log(response.data);
+        navigate("/consulta"); // Redireciona para a página de consulta
+      })
+      .catch((error) => {
+        alert("Erro ao cadastrar o projeto sem arquivo.");
+        console.error(error);
+      });
     }
   };
+  
 
   // Input Comentário
   const LimiteCaracteres = 2400;
