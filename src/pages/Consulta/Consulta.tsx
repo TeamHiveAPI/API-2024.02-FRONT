@@ -135,9 +135,9 @@ function Consulta() {
         </tr>
       ))
     ) : (
-      <tr>
-        <td colSpan={6}>Nenhum projeto encontrado.</td>
-      </tr>
+      <tr className="nenhum-projeto">
+      <td colSpan={6}>Nenhum projeto encontrado.</td>
+    </tr>
     )}
   </tbody>
 </table>

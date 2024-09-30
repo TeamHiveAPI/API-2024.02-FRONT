@@ -124,3 +124,15 @@ td img:hover {
     width: 40%;
     padding-right: 32px;
 }
+
+table th:first-child, 
+table td:first-child {
+  padding-left: 20px;  // Adiciona margem na "Referência do Projeto"
+}
+
+.nenhum-projeto {
+  td {
+    padding-left: 20px;  // Adiciona margem para a mensagem "Nenhum projeto encontrado"
+    padding-bottom: 20px;  // Adiciona padding na parte inferior da célula
+  }
+}
