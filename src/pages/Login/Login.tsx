@@ -42,18 +42,10 @@ function Login() {
             <div className="login_container">
                 <div className="margem_10 login_box_container">
                     <h2>LOGIN</h2>
-                    {/* Input de email */}
                     <FormInputEmail onEmailChange={setEmail} />
-
-                    {/* Input de senha */}
                     <FormInputSenha type="normal" onSenhaChange={setSenha} />
-
                     <div className="login_baixo">
-                        {/* Botão para enviar o login */}
                         <BotaoCTA escrito="Entrar" aparencia="primario" onClick={handleLogin} />
-
-                        {/* Botão para redirecionar ao cadastro */}
-                        <BotaoCTA link="/cadastro" escrito="Cadastre-se" aparencia="secundario" />
                     </div>
                 </div>
             </div>
