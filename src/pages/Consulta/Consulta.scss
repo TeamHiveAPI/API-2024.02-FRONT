@@ -127,12 +127,41 @@ td img:hover {
 
 table th:first-child, 
 table td:first-child {
-  padding-left: 20px;  // Adiciona margem na "Referência do Projeto"
+  padding-left: 20px;
 }
 
-.nenhum-projeto {
-  td {
-    padding-left: 20px;  // Adiciona margem para a mensagem "Nenhum projeto encontrado"
-    padding-bottom: 20px;  // Adiciona padding na parte inferior da célula
-  }
+.cons_nenhum td {
+    padding-left: 56px !important;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.cons_botoes_admin {
+    display: flex;
+    gap: 32px;
+}
+
+.cons_botao_grande {
+    display: flex;
+    gap: 24px;
+    background-color: $primario;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    padding: 32px;
+    margin-bottom: 32px !important;
+    border-radius: 16px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.cons_botao_grande:hover {
+    background-color: $primario-hover;
+    cursor: pointer;
+}
+
+.cons_botao_grande img {
+    width: 40px;
 }

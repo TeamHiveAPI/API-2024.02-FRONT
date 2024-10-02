@@ -62,7 +62,18 @@ function Consulta() {
     <>
       <Navbar />
 
-      <div className="margem_10 cons_container mtop80">
+      <div className="cons_botoes_admin margem_10 mtop80">
+        <div className="cons_botao_grande" onClick={() => navigate("/cadastro-projeto")}>
+          <img src="img/criar_projeto.svg" />
+          <p>Cadastrar Projeto</p>
+        </div>
+        <div className="cons_botao_grande" onClick={() => navigate("/dashboard")}>
+          <img src="img/dashboard.svg" />
+          <p>Dashboard</p>
+        </div>
+      </div>
+
+      <div className="margem_10 cons_container">
         <h1>Consulta de Projetos</h1>
       </div>
 
@@ -121,12 +132,7 @@ function Consulta() {
     {projetos.length > 0 ? (
       projetos.map((projeto) => (
         <tr key={projeto.id}>
-          <td><img 
-  src="img/detalhe_arquivo.svg" 
-  alt="detalhe" 
-  className="detalhe_projeto" 
-  onClick={() => navigate(`/projeto/${projeto.id}`)} // Redireciona ao clicar na imagem
-/></td>
+          <td><img src="img/detalhe_arquivo.svg" alt="detalhe" className="detalhe_projeto" onClick={() => navigate(`/projeto/${projeto.id}`)}/></td>
           <td>{projeto.referencia}</td>
           <td>{formatarData(projeto.dataInicio)}</td>
           <td>{formatarData(projeto.dataTermino)}</td>
@@ -135,7 +141,7 @@ function Consulta() {
         </tr>
       ))
     ) : (
-      <tr className="nenhum-projeto">
+    <tr className="cons_nenhum">
       <td colSpan={6}>Nenhum projeto encontrado.</td>
     </tr>
     )}

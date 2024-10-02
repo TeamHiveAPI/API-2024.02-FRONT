@@ -14,7 +14,7 @@ const SecaoCima = ({ titulo }: any) => {
       <div className="secao_cima margem_10">
         <h2>{titulo}</h2>
         <BotaoCTA
-          img="img/voltar.svg"
+          img="/img/voltar.svg"
           escrito="Voltar"
           aparencia="primario"
           onClick={handleVoltar}
