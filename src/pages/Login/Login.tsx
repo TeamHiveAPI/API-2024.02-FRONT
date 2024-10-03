@@ -6,31 +6,32 @@ import Navbar from "../../components/Navbar/Navbar";
 import FormInputSenha from "../../components/FormInput/FormInputSenha";
 import FormInputEmail from "../../components/FormInput/FormInputEmail";
 import "./Login.scss";
+import { toast } from "react-toastify";
+import NotificacaoToast from "../../components/NotificacaoToast/NotificacaoToast";
 
 function Login() {
-    const [email, setEmail] = useState("");  // Estado para armazenar o email
-    const [senha, setSenha] = useState("");  // Estado para armazenar a senha
-    const navigate = useNavigate();  // Hook para redirecionamento
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const navigate = useNavigate();
 
-    // Função para realizar o login
     const handleLogin = () => {
-        // Dados que serão enviados para o backend
         const dadosLogin = {
             email: email, 
             senha: senha
         };
 
-        // Enviando a requisição POST para o backend
         axios.post('http://localhost:8080/usuarios/login', dadosLogin)
-            .then((response: AxiosResponse) => {  // Tipagem explícita para 'response'
+            .then((response: AxiosResponse) => {
                 // Se o login for bem-sucedido
-                alert("Login realizado com sucesso!");
+                toast.success("Login realizado com sucesso!");
+                setTimeout(() => {
+                    navigate("/consulta");
+                  }, 3000);
                 console.log(response.data);
-                navigate("/consulta");  // Redireciona para a página de consulta
             })
-            .catch((error: AxiosError) => {  // Tipagem explícita para 'error'
+            .catch((error: AxiosError) => {
                 // Se houver um erro no login
-                alert("Erro ao realizar o login. Verifique suas credenciais.");
+                toast.warn("Erro ao realizar o login. Verifique suas credenciais.");
                 console.error(error);
             });
     };
@@ -38,6 +39,8 @@ function Login() {
     return (
         <>
             <Navbar />
+
+            <NotificacaoToast />
 
             <div className="login_container">
                 <div className="margem_10 login_box_container">

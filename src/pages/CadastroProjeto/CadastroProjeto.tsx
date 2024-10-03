@@ -5,8 +5,9 @@ import Navbar from "../../components/Navbar/Navbar";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import SubirArquivo from "../../components/SubirArquivo/SubirArquivo";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
+import { toast } from "react-toastify";
+import NotificacaoToast from "../../components/NotificacaoToast/NotificacaoToast";
 import "../CadastroProjeto/CadastroProjeto.scss";
-
 function CadastroProjeto() {
   
   const navigate = useNavigate(); // Inicializa o useNavigate
@@ -81,11 +82,13 @@ function CadastroProjeto() {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {
-        alert(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
-        navigate("/consulta");
+        toast.success(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
+        setTimeout(() => {
+          navigate("/consulta");
+        }, 3000);
       })
       .catch((error) => {
-        alert(`Erro ao ${id ? 'atualizar' : 'cadastrar'} o projeto.`);
+        toast.warn(`Erro ao ${id ? 'atualizar' : 'cadastrar'} o projeto.`);
         console.error(error);
       });
     } else {
@@ -98,11 +101,13 @@ function CadastroProjeto() {
         data: projeto
       })
       .then((response) => {
-        alert(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
-        navigate("/consulta");
+        toast.success(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
+        setTimeout(() => {
+          navigate("/consulta");
+        }, 3000);
       })
       .catch((error) => {
-        alert(`Erro ao ${id ? 'atualizar' : 'cadastrar'} o projeto.`);
+        toast.warn(`Erro ao ${id ? 'atualizar' : 'cadastrar'} o projeto.`);
         console.error(error);
       });
     }
@@ -126,7 +131,7 @@ function CadastroProjeto() {
     // Verificação ao alterar a data de início
     if (id === "dataInicio" && projeto.dataTermino) {
       if (new Date(value) > new Date(projeto.dataTermino)) {
-        alert("A data de início não pode ser posterior à data de término.");
+        toast.warn("A data de início não pode ser posterior à data de término.");
         return;
       }
     }
@@ -134,7 +139,7 @@ function CadastroProjeto() {
     // Verificação ao alterar a data de término
     if (id === "dataTermino" && projeto.dataInicio) {
       if (new Date(value) < new Date(projeto.dataInicio)) {
-        alert("A data de término não pode ser anterior à data de início.");
+        toast.warn("A data de término não pode ser anterior à data de início.");
         return;
       }
     }
@@ -149,6 +154,8 @@ function CadastroProjeto() {
   return (
     <>
       <Navbar />
+
+      <NotificacaoToast />
 
       <SecaoCima titulo={id ? "Editar Projeto" : "Cadastrar Novo Projeto"} />
       <div className="visu_container_info margem_10">
