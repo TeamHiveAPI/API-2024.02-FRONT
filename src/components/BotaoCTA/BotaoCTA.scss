@@ -107,3 +107,8 @@
 .botao_cta_primario.botao_cta_cinza:hover img {
     filter: brightness(1)
 }
+
+.botao_cta_cor_primario {
+    color: $primario;
+    border: 2px solid $primario;
+}

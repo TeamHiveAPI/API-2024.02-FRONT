@@ -6,7 +6,7 @@ interface BotaoProps {
   link?: string;
   escrito: string;
   aparencia: "primario" | "secundario";
-  cor?: "verde" | "vermelho" | "cinza";
+  cor?: "cor_primario" | "verde" | "vermelho" | "cinza";
   type?: "button" | "submit";
   img?: string;
   onClick?: () => void;

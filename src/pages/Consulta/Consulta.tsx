@@ -120,7 +120,7 @@ function Consulta() {
       <table className="margem_10">
   <thead>
     <tr>
-      <th> </th>
+      <th className="th_botao"> </th>
       <th>Referência do Projeto</th>
       <th>Início</th>
       <th>Término</th>
@@ -133,7 +133,7 @@ function Consulta() {
       projetos.map((projeto) => (
         <tr key={projeto.id}>
           <td><img src="img/detalhe_arquivo.svg" alt="detalhe" className="detalhe_projeto" onClick={() => navigate(`/projeto/${projeto.id}`)}/></td>
-          <td>{projeto.referencia}</td>
+          <td className="referencia">{projeto.referencia}</td>
           <td>{formatarData(projeto.dataInicio)}</td>
           <td>{formatarData(projeto.dataTermino)}</td>
           <td>{projeto.coordenador}</td>

@@ -35,7 +35,7 @@ function VisualizacaoProjeto() {
     <>
       <Navbar />
 
-      <SecaoCima titulo="Informações do Projeto" />
+      <SecaoCima titulo="Informações do Projeto" admin="sim" projetoID={id} />
 
       <div className="visu_container_info margem_10">
         <div className="visu_info_linha">

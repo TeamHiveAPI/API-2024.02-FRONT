@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";  
+import { useNavigate, useParams } from "react-router-dom";  
 import Navbar from "../../components/Navbar/Navbar";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import SubirArquivo from "../../components/SubirArquivo/SubirArquivo";
@@ -10,8 +10,8 @@ import "../CadastroProjeto/CadastroProjeto.scss";
 function CadastroProjeto() {
   
   const navigate = useNavigate(); // Inicializa o useNavigate
+  const { id } = useParams(); // Pega o id do projeto na URL, se estiver no modo de edição
 
-  // Estados para armazenar os dados do formulário
   const [projeto, setProjeto] = useState({
     referencia: "",
     situacao: "",
@@ -24,71 +24,82 @@ function CadastroProjeto() {
     classificacao: "",
   });
 
-  // Estado para armazenar o arquivo
-  const [arquivo, setArquivo] = useState<File | null>(null); // Define arquivo como null inicialmente
+  const [arquivo, setArquivo] = useState<File | null>(null);
 
-  // Função para capturar o arquivo
+  // Se o ID existir, estamos no modo de edição, então busca-se os dados do projeto 
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:8080/projetos/${id}`)
+        .then((response) => {
+          setProjeto(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar os dados do projeto", error);
+        });
+    }
+  }, [id]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setArquivo(e.target.files[0]); // Pega o primeiro arquivo selecionado
+      setArquivo(e.target.files[0]);
     }
   };
 
-  // Função para atualizar os estados com os valores do formulário
   const handleChange = (e: any) => {
     const { id, value } = e.target;
-
-    // Verificar se o campo é o valor do projeto e fazer a conversão para número
     const newValue = id === "valor" ? parseFloat(value) || 0 : value;
 
     setProjeto((prevState) => ({
-        ...prevState,
-        [id]: newValue,
+      ...prevState,
+      [id]: newValue,
     }));
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    
-    console.log(projeto); // Verifique se a descrição está presente no objeto projeto
-  
+
     if (arquivo && arquivo.size > 0) {
-      // Se houver arquivo, envia como multipart/form-data
       const formData = new FormData();
-      formData.append('projeto', JSON.stringify(projeto)); // Certifique-se de serializar o objeto
+      formData.append('projeto', JSON.stringify(projeto));
       formData.append('arquivo', arquivo);
-  
-      axios.post('http://localhost:8080/projetos', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+
+      const url = id ? `http://localhost:8080/projetos/${id}` : 'http://localhost:8080/projetos';
+      const method = id ? 'put' : 'post';
+
+      axios({
+        method: method,
+        url: url,
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {
-        alert("Projeto com arquivo cadastrado com sucesso!");
-        console.log(response.data);
-        navigate("/consulta"); // Redireciona para a página de consulta
+        alert(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
+        navigate("/consulta");
       })
       .catch((error) => {
-        alert("Erro ao cadastrar o projeto com arquivo.");
+        alert(`Erro ao ${id ? 'atualizar' : 'cadastrar'} o projeto.`);
         console.error(error);
       });
     } else {
-      // Se não houver arquivo, envia como JSON simples
-      axios.post('http://localhost:8080/projetos', projeto)
+      const url = id ? `http://localhost:8080/projetos/${id}` : 'http://localhost:8080/projetos';
+      const method = id ? 'put' : 'post';
+
+      axios({
+        method: method,
+        url: url,
+        data: projeto
+      })
       .then((response) => {
-        alert("Projeto sem arquivo cadastrado com sucesso!");
-        console.log(response.data);
-        navigate("/consulta"); // Redireciona para a página de consulta
+        alert(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
+        navigate("/consulta");
       })
       .catch((error) => {
-        alert("Erro ao cadastrar o projeto sem arquivo.");
+        alert(`Erro ao ${id ? 'atualizar' : 'cadastrar'} o projeto.`);
         console.error(error);
       });
     }
   };
-  
 
-  // Input Comentário
   const LimiteCaracteres = 2400;
 
   const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -106,7 +117,7 @@ function CadastroProjeto() {
     <>
       <Navbar />
 
-      <SecaoCima titulo="Cadastrar Novo Projeto" />
+      <SecaoCima titulo={id ? "Editar Projeto" : "Cadastrar Novo Projeto"} />
       <div className="visu_container_info margem_10">
         <h2 className="cadpro_titulo">Informações Principais</h2>
 

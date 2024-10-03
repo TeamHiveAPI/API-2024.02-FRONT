@@ -15,3 +15,9 @@
 .secao_cima h2 {
     color: $primario;
 }
+
+.secao_cima_botoes {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+}
