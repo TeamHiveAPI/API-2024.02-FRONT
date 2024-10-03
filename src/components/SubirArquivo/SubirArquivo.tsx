@@ -13,7 +13,7 @@ const SubirArquivo: React.FC<SubirArquivoProps> = ({ titulo }) => {
             <div className="subarq_mensagem">
                 Nenhum arquivo subido ainda.
             </div>
-            <BotaoCTA img="img/nuvem_upload.svg" escrito="Subir arquivo" aparencia="primario"/>
+            <BotaoCTA img="/img/nuvem_upload.svg" escrito="Subir arquivo" aparencia="primario"/>
 
         </div>
     );

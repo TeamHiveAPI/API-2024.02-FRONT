@@ -198,8 +198,8 @@ function CadastroProjeto() {
 
         <div className="cadpro_botao_cadastrar" onClick={handleSubmit}>
           <BotaoCTA
-            img="img/salvar.svg"
-            escrito="Cadastrar"
+            img="/img/salvar.svg"
+            escrito={id ? "Editar Projeto" : "Cadastrar Projeto"}
             aparencia="primario"
           />
         </div>

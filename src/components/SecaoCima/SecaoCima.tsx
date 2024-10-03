@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import BotaoCTA from '../BotaoCTA/BotaoCTA';
 import "./SecaoCima.scss"
+import axios from 'axios';
 
 interface SecaoCimaProps {
   titulo: string;
@@ -17,6 +18,20 @@ const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
 
   const handleEditarProjeto = () => {
     navigate(`/edicao-projeto/${projetoID}`);
+  };
+
+  const handleExcluirProjeto = async () => {
+    const confirmacao = window.confirm('Tem certeza que deseja excluir este projeto?');
+    if (confirmacao) {
+      try {
+        await axios.delete(`http://localhost:8080/projetos/${projetoID}`);
+        alert('Projeto excluído com sucesso!');
+        navigate('/consulta');
+      } catch (error) {
+        console.error('Erro ao excluir o projeto:', error);
+        alert('Erro ao excluir o projeto.');
+      }
+    }
   };
 
   return (
@@ -45,7 +60,7 @@ const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
               escrito="Deletar"
               aparencia="secundario"
               cor="vermelho"
-              onClick={() => console.log("Ação Extra 1 clicada")}
+              onClick={handleExcluirProjeto}
             />
           </>
         )}
