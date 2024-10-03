@@ -47,12 +47,20 @@ function CadastroProjeto() {
 
   const handleChange = (e: any) => {
     const { id, value } = e.target;
-    const newValue = id === "valor" ? parseFloat(value) || 0 : value;
 
-    setProjeto((prevState) => ({
-      ...prevState,
-      [id]: newValue,
-    }));
+    // Permitir apenas números (remover caracteres não numéricos)
+    if (id === "valor") {
+      const onlyNumbers = value.replace(/[^0-9]/g, ""); // Remove tudo que não é número
+      setProjeto((prevState) => ({
+        ...prevState,
+        [id]: onlyNumbers
+      }));
+    } else {
+      setProjeto((prevState) => ({
+        ...prevState,
+        [id]: value
+      }));
+    }
   };
 
   const handleSubmit = (e: any) => {
@@ -111,7 +119,32 @@ function CadastroProjeto() {
       }));
     }
   };
-  
+
+  const handleDataChange = (e: any) => {
+    const { id, value } = e.target;
+
+    // Verificação ao alterar a data de início
+    if (id === "dataInicio" && projeto.dataTermino) {
+      if (new Date(value) > new Date(projeto.dataTermino)) {
+        alert("A data de início não pode ser posterior à data de término.");
+        return;
+      }
+    }
+
+    // Verificação ao alterar a data de término
+    if (id === "dataTermino" && projeto.dataInicio) {
+      if (new Date(value) < new Date(projeto.dataInicio)) {
+        alert("A data de término não pode ser anterior à data de início.");
+        return;
+      }
+    }
+
+    // Atualiza o estado do projeto
+    setProjeto((prevState) => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
 
   return (
     <>
@@ -173,21 +206,16 @@ function CadastroProjeto() {
             <div className="cadpro_secao">
                 <div className="cadpro_input">
               <label htmlFor="dataInicio">Data de Início</label>
-              <input type="date" id="dataInicio" value={projeto.dataInicio} onChange={handleChange} />
+              <input type="date" id="dataInicio" value={projeto.dataInicio} onChange={handleDataChange} />
                 </div>
                 <div className="cadpro_input">
               <label htmlFor="dataTermino">Data de Término</label>
-              <input type="date" id="dataTermino" value={projeto.dataTermino} onChange={handleChange} />
+              <input type="date" id="dataTermino" value={projeto.dataTermino} onChange={handleDataChange} />
                 </div>
                 <div className="cadpro_input">
                 <label htmlFor="valor">Valor do Projeto</label>
                 <input 
-                  type="number" 
-                  id="valor"
-                  placeholder="Digite aqui..." 
-                  value={projeto.valor} 
-                  onChange={handleChange} 
-                />
+                  type="text" id="valor" placeholder="Digite aqui..." value={projeto.valor} onChange={handleChange} />
               </div>
             </div>
         </form>

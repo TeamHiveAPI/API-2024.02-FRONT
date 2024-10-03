@@ -14,7 +14,6 @@ export default function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/projeto/:id" element={<VisualizacaoProjeto />} />
         <Route path="/consulta" element={<Consulta />} />
-        <Route path="/detalhes" element={<VisualizacaoProjeto />} />
         <Route path="/cadastro-projeto" element={<CadastroProjeto />} />
         <Route path="/edicao-projeto/:id" element={<CadastroProjeto />} /> {/* Rota para edição */}
         </Routes>
