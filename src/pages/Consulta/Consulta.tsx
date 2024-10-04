@@ -121,11 +121,11 @@ function Consulta() {
   <thead>
     <tr>
       <th className="th_botao"> </th>
-      <th>Referência do Projeto</th>
-      <th>Início</th>
-      <th>Término</th>
-      <th>Coordenador</th>
-      <th>Valor</th>
+      <th className="th_referencia">Referência do Projeto</th>
+      <th className="th_data">Início</th>
+      <th className="th_data">Término</th>
+      <th className="th_coordenador">Coordenador</th>
+      <th className="th_valor">Valor</th>
     </tr>
   </thead>
   <tbody>
@@ -135,8 +135,8 @@ function Consulta() {
           <td><img src="img/detalhe_arquivo.svg" alt="detalhe" className="detalhe_projeto" onClick={() => navigate(`/projeto/${projeto.id}`)}/></td>
           <td className="referencia">{projeto.referencia}</td>
           <td>{formatarData(projeto.dataInicio)}</td>
-          <td>{formatarData(projeto.dataTermino)}</td>
-          <td>{projeto.coordenador}</td>
+          <td>{projeto.dataTermino ? formatarData(projeto.dataTermino) : "Em Processo"}</td>
+          <td className="coordenador">{projeto.coordenador}</td>
           <td>R${projeto.valor.toFixed(2)}</td>
         </tr>
       ))

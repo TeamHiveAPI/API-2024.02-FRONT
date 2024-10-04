@@ -95,6 +95,7 @@ th, td {
     padding: 16px 0px;
     text-align: left;
     color: #303030;
+    font-size: 0.95rem;
 }
 
 th {
@@ -174,6 +175,32 @@ table td:first-child {
     padding-right: 40px;
 }
 
+.coordenador {
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 50px;
+    padding-right: 40px;
+}
+
 .th_botao {
-    width: 135px;
+    width: 11%;
+    min-width: 130px;
+}
+
+.th_referencia {
+    width: 32%;
+}
+
+.th_data {
+    width: 10%;
+    min-width: 110px;
+}
+
+.th_coordenador {
+    width: 20%;
+}
+
+.th_valor {
+    width: 20%;
 }
