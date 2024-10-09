@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import Navbar from "../../components/Navbar/Navbar";
-import { useNavigate } from "react-router-dom"; // Importar o hook useNavigate
+import { useNavigate } from "react-router-dom";
 import "../../global.scss";
 import "./Consulta.scss";
 import "../../components/Input/Input.scss";
@@ -17,7 +17,7 @@ interface Projeto {
 }
 
 function Consulta() {
-  const navigate = useNavigate(); // Instanciar o hook
+  const navigate = useNavigate();
 
   const [termoPesquisa, setTermoPesquisa] = useState(""); // Armazena o termo de pesquisa
   const [projetos, setProjetos] = useState<Projeto[]>([]);
@@ -54,27 +54,36 @@ function Consulta() {
       }
     }
   
-    carregarTabelaConsulta(); // Chama a função para carregar os projetos ao montar o componente
-  }, [navigate]); // 'navigate' é uma dependência, o efeito será reexecutado se 'navigate' mudar
+    carregarTabelaConsulta();
+  }, [navigate]); //
   
 
   return (
     <>
       <Navbar />
 
-      <div className="cons_botoes_admin margem_10 mtop80">
-        <div className="cons_botao_grande" onClick={() => navigate("/cadastro-projeto")}>
-          <img src="img/criar_projeto.svg" />
-          <p>Cadastrar Projeto</p>
-        </div>
-        <div className="cons_botao_grande" onClick={() => navigate("/dashboard")}>
-          <img src="img/dashboard.svg" />
-          <p>Dashboard</p>
-        </div>
+      {/* Implementar lógica de mostrar barra depois que ter o JWT*/}
+
+      {/* Se for um usuário, mostrar essa barra */}
+      <div className="margem_10 cons_container mtop80">
+        <h1>Consulta de Projetos</h1>
       </div>
 
-      <div className="margem_10 cons_container">
-        <h1>Consulta de Projetos</h1>
+      {/* Se for um admin, mostrar essa barra */}
+      <div className="margem_10 cons_admin">
+        <div className="cons_container cons_admin_esq">
+          <h1>Consulta de Projetos</h1>
+        </div>
+        <div className="cons_botoes_admin">
+          <button className="cons_botao_grande" onClick={() => navigate("/cadastro-projeto")}>
+            <img src="img/criar_projeto.svg" />
+            <p>Cadastrar Projeto</p>
+          </button>
+          <button className="cons_botao_grande" onClick={() => navigate("/dashboard")}>
+            <img src="img/dashboard.svg" />
+            <p>Dashboard</p>
+          </button>
+        </div>
       </div>
 
       <div className="margem_10 cons_container ">

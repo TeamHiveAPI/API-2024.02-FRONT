@@ -139,7 +139,7 @@ table td:first-child {
 
 .cons_botoes_admin {
     display: flex;
-    gap: 32px;
+    gap: 16px;
 }
 
 .cons_botao_grande {
@@ -149,7 +149,6 @@ table td:first-child {
     color: white;
     align-items: center;
     justify-content: center;
-    width: 25%;
     padding: 32px;
     margin-bottom: 32px !important;
     border-radius: 16px;
@@ -203,4 +202,14 @@ table td:first-child {
 
 .th_valor {
     width: 20%;
+}
+
+.cons_admin {
+    display: flex;
+    gap: 16px;
+}
+
+.cons_admin_esq {
+    display: flex;
+    flex-grow: 1;
 }
