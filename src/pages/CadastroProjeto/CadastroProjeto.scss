@@ -114,3 +114,12 @@ textarea:focus {
     column-gap: 32px;
     flex-wrap: wrap;
 }
+
+.cadpro_nenhum {
+    background-color: $cinza-claro;
+    padding: 24px;
+    width: 33%;
+    margin-top: 32px;
+    border-radius: 8px;
+    color: #606060;
+}

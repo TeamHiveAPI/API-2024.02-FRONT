@@ -48,14 +48,17 @@ function CadastroProjeto() {
   // Planos de Trabalho
   const handleFilePlanosDeTrabalhoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const novoArquivo = e.target.files[0];
+      const novosArquivos = Array.from(e.target.files).map((file) => ({
+        file: file,
+        nome: file.name
+      }));
+  
       setArquivosPlanosDeTrabalho((prevArquivos) => [
         ...prevArquivos,
-        { file: novoArquivo, nome: novoArquivo.name } // Adiciona o novo arquivo com o nome
+        ...novosArquivos // Adiciona todos os arquivos selecionados ao estado
       ]);
     }
   };
-   
 
   const removerArquivoPlanos = (index: number) => {
     setArquivosPlanosDeTrabalho((prevArquivos) =>
@@ -65,14 +68,18 @@ function CadastroProjeto() {
 
   // Contratos
   const handleFileContratosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  if (e.target.files && e.target.files.length > 0) {
-    const novoArquivo = e.target.files[0];
-    setArquivosContratos((prevArquivos) => [
-      ...prevArquivos,
-      { file: novoArquivo, nome: novoArquivo.name }
-    ]);
-  }
-};
+    if (e.target.files && e.target.files.length > 0) {
+      const novosArquivos = Array.from(e.target.files).map((file) => ({
+        file: file,
+        nome: file.name
+      }));
+  
+      setArquivosContratos((prevArquivos) => [
+        ...prevArquivos,
+        ...novosArquivos
+      ]);
+    }
+  };  
 
 const removerArquivoContrato = (index: number) => {
   setArquivosContratos((prevArquivos) =>
@@ -83,10 +90,14 @@ const removerArquivoContrato = (index: number) => {
 // Termos Aditivos
 const handleFileTermosAditivosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   if (e.target.files && e.target.files.length > 0) {
-    const novoArquivo = e.target.files[0];
+    const novosArquivos = Array.from(e.target.files).map((file) => ({
+      file: file,
+      nome: file.name
+    }));
+
     setArquivosTermosAditivos((prevArquivos) => [
       ...prevArquivos,
-      { file: novoArquivo, nome: novoArquivo.name }
+      ...novosArquivos
     ]);
   }
 };
@@ -266,14 +277,18 @@ const removerArquivoTermosAditivos = (index: number) => {
           <div className="cadpro_secao_vertical_arquivo">
           <h2 className="cadpro_titulo_arquivo">Planos de Trabalho</h2>
           <div className="cadpro_arquivo_componentes">
-          {arquivosPlanosDeTrabalho.map((arquivo, index) => (
-            <div key={index}>
-              <SubirArquivo
-              titulo={arquivo.nome}
-                onRemove={() => removerArquivoPlanos(index)}
-            />
-            </div>
-          ))}
+          {arquivosPlanosDeTrabalho.length === 0 ? (
+          <p className="cadpro_nenhum">Nenhum arquivo selecionado.</p>
+          ) : (
+            arquivosPlanosDeTrabalho.map((arquivo, index) => (
+              <div key={index}>
+                <SubirArquivo
+                  titulo={arquivo.nome}
+                  onRemove={() => removerArquivoPlanos(index)}
+                />
+              </div>
+            ))
+          )}
           </div>
           {/* Input invisível para selecionar arquivos */}
           <input
@@ -281,6 +296,7 @@ const removerArquivoTermosAditivos = (index: number) => {
             id="input-file-upload-planos"
             style={{ display: "none" }}
             onChange={handleFilePlanosDeTrabalhoChange}
+            multiple
           />
           {/* Botão para abrir o input e selecionar o arquivo */}
           <div className="cadpro_botao_upload">
@@ -296,14 +312,18 @@ const removerArquivoTermosAditivos = (index: number) => {
           <div className="cadpro_secao_vertical_arquivo">
           <h2 className="cadpro_titulo_arquivo">Contratos</h2>
           <div className="cadpro_arquivo_componentes">
-          {arquivosContratos.map((arquivo, index) => (
-            <div key={index}>
-              <SubirArquivo
-                titulo={arquivo.nome}
-                onRemove={() => removerArquivoContrato(index)}
-              />
-            </div>
-          ))}
+          {arquivosContratos.length === 0 ? (
+          <p className="cadpro_nenhum">Nenhum arquivo selecionado.</p>
+          ) : (
+            arquivosContratos.map((arquivo, index) => (
+              <div key={index}>
+                <SubirArquivo
+                  titulo={arquivo.nome}
+                  onRemove={() => removerArquivoContrato(index)}
+                />
+              </div>
+            ))
+          )}
           </div>
           {/* Input invisível para selecionar arquivos */}
           <input
@@ -311,6 +331,7 @@ const removerArquivoTermosAditivos = (index: number) => {
             id="input-file-upload-contratos"
             style={{ display: "none" }}
             onChange={handleFileContratosChange}
+            multiple
           />
           {/* Botão para abrir o input e selecionar o arquivo */}
           <div className="cadpro_botao_upload">
@@ -326,14 +347,18 @@ const removerArquivoTermosAditivos = (index: number) => {
           <div className="cadpro_secao_vertical_arquivo">
           <h2 className="cadpro_titulo_arquivo">Termos Aditivos</h2>
             <div className="cadpro_arquivo_componentes">
-            {arquivosTermosAditivos.map((arquivo, index) => (
+            {arquivosTermosAditivos.length === 0 ? (
+          <p className="cadpro_nenhum">Nenhum arquivo selecionado.</p>
+          ) : (
+            arquivosTermosAditivos.map((arquivo, index) => (
               <div key={index}>
                 <SubirArquivo
                   titulo={arquivo.nome}
                   onRemove={() => removerArquivoTermosAditivos(index)}
                 />
               </div>
-            ))}
+            ))
+          )}
           </div>
           {/* Input invisível para selecionar arquivos */}
           <input
@@ -341,6 +366,7 @@ const removerArquivoTermosAditivos = (index: number) => {
             id="input-file-upload-termos-aditivos"
             style={{ display: "none" }}
             onChange={handleFileTermosAditivosChange}
+            multiple
           />
           {/* Botão para abrir o input e selecionar o arquivo */}
           <div className="cadpro_botao_upload">
