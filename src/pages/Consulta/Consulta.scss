@@ -132,9 +132,11 @@ table td:first-child {
 }
 
 .cons_nenhum td {
-    padding-left: 56px !important;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    text-align: center;
+    color: #606060;
+    font-weight: 500;
 }
 
 .cons_botoes_admin {
