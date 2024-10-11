@@ -148,9 +148,28 @@ const removerArquivoTermosAditivos = (index: number) => {
 
     arquivosPlanosDeTrabalho.forEach((arquivo, index) => {
       if (arquivo.file) { // Verifica se existe um arquivo
-        formData.append(`planosDeTrabalho[${index}]`, arquivo.file, arquivo.nome); // Passa o arquivo e o nome
+        formData.append(`planosDeTrabalho`, arquivo.file); // Passa o arquivo e o nome
       }
     });
+
+    // Enviar arquivos de Contratos
+    arquivosContratos.forEach((arquivo) => {
+      if (arquivo.file) {
+        formData.append("contratos", arquivo.file);  // Nome do campo é "contratos"
+      }
+    });
+
+    // Enviar arquivos de Termos Aditivos
+    arquivosTermosAditivos.forEach((arquivo) => {
+      if (arquivo.file) {
+        formData.append("termosAditivos", arquivo.file);  // Nome do campo é "termosAditivos"
+      }
+    });
+
+    console.log("Arquivos Planos de Trabalho:", arquivosPlanosDeTrabalho);
+    console.log("Arquivos Contratos:", arquivosContratos);
+    console.log("Arquivos Termos Aditivos:", arquivosTermosAditivos);
+
 
     const url = id ? `http://localhost:8080/projetos/${id}` : 'http://localhost:8080/projetos';
     const method = id ? 'put' : 'post';
