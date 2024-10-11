@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import BotaoCTA from '../BotaoCTA/BotaoCTA';
 import "./SecaoCima.scss"
-import axios from 'axios';
+import api from "../../utils/axiosConfig";
 import { toast, ToastContainer } from 'react-toastify';
 import NotificacaoToast from '../NotificacaoToast/NotificacaoToast';
 
@@ -26,7 +26,7 @@ const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
     const confirmacao = window.confirm('Tem certeza que deseja excluir este projeto?');
     if (confirmacao) {
       try {
-        await axios.delete(`http://localhost:8080/projetos/${projetoID}`);
+        await api.delete(`http://localhost:8080/projetos/${projetoID}`);
         toast.success('Projeto excluído com sucesso!');
         setTimeout(() => {
           navigate("/consulta");

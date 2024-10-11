@@ -20,10 +20,14 @@ function Login() {
             senha: senha
         };
 
-        axios.post('http://localhost:8080/usuarios/login', dadosLogin)
+        axios.post('http://localhost:8080/auth/login', dadosLogin)
             .then((response: AxiosResponse) => {
                 // Se o login for bem-sucedido
                 toast.success("Login realizado com sucesso!");
+
+                const token = response.data;
+                localStorage.setItem("token", token);
+
                 setTimeout(() => {
                     navigate("/consulta");
                   }, 3000);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/axiosConfig";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ function Consulta() {
 
   const handleSearch = () => {
     console.log("Botão de busca foi clicado"); // Verifique no console do navegador
-    axios.get('http://localhost:8080/projetos/search', {
+    api.get('http://localhost:8080/projetos/search', {
       params: { 
         coordenador: termoPesquisa  // Aqui pode adicionar mais parâmetros
       }
@@ -47,7 +47,7 @@ function Consulta() {
     async function carregarTabelaConsulta() {
       try {
         // Faz a requisição para obter os projetos
-        const response = await axios.get("http://localhost:8080/projetos");
+        const response = await api.get("http://localhost:8080/projetos");
         setProjetos(response.data); // Atualiza o estado com os projetos retornados
       } catch (error) {
         console.error("Erro ao carregar os projetos:", error);

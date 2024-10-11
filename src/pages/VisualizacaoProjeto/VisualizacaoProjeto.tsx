@@ -3,7 +3,7 @@ import CardArquivo from "../../components/CardArquivo/CardArquivo";
 import Navbar from "../../components/Navbar/Navbar";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // Para pegar o ID da URL
-import axios from "axios";
+import api from "../../utils/axiosConfig";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
 import "./VisualizacaoProjeto.scss";
 
@@ -17,7 +17,7 @@ function VisualizacaoProjeto() {
     // Função para buscar os detalhes do projeto
     async function carregarProjeto() {
       try {
-        const response = await axios.get(`http://localhost:8080/projetos/${id}`);
+        const response = await api.get(`http://localhost:8080/projetos/${id}`);
         setProjeto(response.data);
       } catch (error) {
         console.error("Erro ao carregar o projeto:", error);

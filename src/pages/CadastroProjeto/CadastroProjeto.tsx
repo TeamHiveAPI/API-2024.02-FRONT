@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import api from "../../utils/axiosConfig";
+import { useNavigate, useParams } from "react-router-dom";  
 import Navbar from "../../components/Navbar/Navbar";
 import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import SubirArquivo from "../../components/SubirArquivo/SubirArquivo";
@@ -27,8 +27,7 @@ function CadastroProjeto() {
 
   useEffect(() => {
     if (id) {
-      axios
-        .get(`http://localhost:8080/projetos/${id}`)
+      api.get(`http://localhost:8080/projetos/${id}`)
         .then((response) => {
           setProjeto(response.data);
         })
@@ -156,7 +155,7 @@ const removerArquivoTermosAditivos = (index: number) => {
     const url = id ? `http://localhost:8080/projetos/${id}` : 'http://localhost:8080/projetos';
     const method = id ? 'put' : 'post';
 
-    axios ({
+    api ({
       method: method,
       url: url,
       data: formData,
