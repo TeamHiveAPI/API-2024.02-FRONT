@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../../global.scss";
 import "./Consulta.scss";
 import "../../components/Input/Input.scss";
-import * as jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 interface Projeto {
   id: number;
@@ -53,8 +53,9 @@ function Consulta() {
     if (token) {
       try {
         // Decodificar o token e pegar o papel (role) do usuário
-        const decodedToken: any = (jwt_decode as any)(token);
-        setRole(decodedToken.role);
+        const decodedToken: any = jwtDecode(token); // Correção da função
+        console.log('Decoded Token:', decodedToken); // Verificar o conteúdo do token no console
+        setRole(decodedToken.role); // Armazenar a role do token no estado
       } catch (error) {
         console.error('Token inválido ou expirado', error);
       }
@@ -84,7 +85,7 @@ function Consulta() {
       )}
 
       {role === "ROLE_ADMIN" && (
-      <div className="margem_10 cons_admin">
+      <div className="margem_10 cons_admin mtop80">
         <div className="cons_container cons_admin_esq">
           <h1>Consulta de Projetos</h1>
         </div>
