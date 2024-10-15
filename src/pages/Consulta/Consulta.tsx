@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../../global.scss";
 import "./Consulta.scss";
 import "../../components/Input/Input.scss";
+import * as jwt_decode from 'jwt-decode';
 
 interface Projeto {
   id: number;
@@ -17,65 +18,72 @@ interface Projeto {
 }
 
 function Consulta() {
-
   const navigate = useNavigate();
 
   const [ativo, setAtivo] = useState('Tudo'); // Inicialmente "Tudo" está ativo
-
-  const handleBotaoPesquisa = (nome: any) => {
-    setAtivo(nome); // Define o botão clicado como ativo
-  };
-
+  const [role, setRole] = useState<string | null>(null); // Estado para armazenar o papel do usuário
   const [termoPesquisa, setTermoPesquisa] = useState(""); // Armazena o termo de pesquisa
   const [projetos, setProjetos] = useState<Projeto[]>([]);
 
-  function formatarData(data: any) {
+  const handleBotaoPesquisa = (nome: string) => {
+    setAtivo(nome);
+  };
+
+  function formatarData(data: string) {
     const [ano, mes, dia] = data.split("-");
     return `${dia}/${mes}/${ano}`;
   }
 
   const handleSearch = () => {
-    console.log("Botão de busca foi clicado"); // Verifique no console do navegador
     api.get('http://localhost:8080/projetos/search', {
-      params: { 
-        coordenador: termoPesquisa  // Aqui pode adicionar mais parâmetros
-      }
+      params: { coordenador: termoPesquisa }
     })
     .then(response => {
-      console.log(response.data); // Verifique se os dados estão retornando do backend
       setProjetos(response.data);  // Armazenar os projetos retornados
     })
     .catch(error => {
       console.error("Erro ao buscar projetos:", error);
     });
-  }
+  };
 
   useEffect(() => {
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        // Decodificar o token e pegar o papel (role) do usuário
+        const decodedToken: any = (jwt_decode as any)(token);
+        setRole(decodedToken.role);
+      } catch (error) {
+        console.error('Token inválido ou expirado', error);
+      }
+    }
+
     async function carregarTabelaConsulta() {
       try {
-        // Faz a requisição para obter os projetos
         const response = await api.get("http://localhost:8080/projetos");
         setProjetos(response.data); // Atualiza o estado com os projetos retornados
       } catch (error) {
         console.error("Erro ao carregar os projetos:", error);
       }
     }
-  
+
     carregarTabelaConsulta();
-  }, [navigate]); //
-  
+
+  }, [navigate]);
+
   return (
     <>
       <Navbar />
-  
-      {/* Implementar lógica de mostrar barra depois que ter o JWT*/}
-  
-      {/* Se for um usuário, mostrar essa barra */}
+
+      {role !== "ROLE_ADMIN" && (
       <div className="margem_10 cons_container mtop80 align_center">
         <h1>Consulta de Projetos</h1>
       </div>
-  
-      {/* Se for um admin, mostrar essa barra */}
+      )}
+
+      {role === "ROLE_ADMIN" && (
       <div className="margem_10 cons_admin">
         <div className="cons_container cons_admin_esq">
           <h1>Consulta de Projetos</h1>
@@ -91,7 +99,8 @@ function Consulta() {
           </button>
         </div>
       </div>
-  
+      )}
+
       <div className="margem_10 cons_container">
         <div className="cons_barra_pesquisa">
           <input
@@ -111,7 +120,7 @@ function Consulta() {
           <button className={`cons_botao_pesquisa ${ativo === 'Data de Término' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Data de Término')}> Data de Término </button>
         </div>
       </div>
-  
+
       <table className="margem_10">
         <thead>
           <tr>
