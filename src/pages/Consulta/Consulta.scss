@@ -3,13 +3,16 @@
 .cons_container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     row-gap: 32px;
     background-color: white;
     padding: 40px;
     border-radius: 16px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
     margin-bottom: 32px !important; 
+}
+
+.align_center {
+    align-items: center;
 }
 
 .cons_container h1 {
@@ -41,46 +44,37 @@
     outline: none;
 }
 
-.cons_explicacao {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    width: 100%;
-    gap: 16px;
-}
-
-.cons_explicacao h4, .cons_topico_detalhe {
-    padding: 16px;
-    background-color: #F5F5F5;
-    border-radius: 8px;
-    font-weight: 400;
-}
-
-.cons_topicos {
-    display: flex;
-    gap: 16px;
-}
-
-.cons_topicos_esq, .cons_topicos_dir {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-}
-
-.cons_topico_detalhe {
-    height: 100%;
-}
-
-.cons_topico_detalhe h5 {
+.cons_botao_pesquisa {
+    padding: 12px 24px;
     font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 16px;
+    border-radius: 8px;
+    color: $primario;
+    font-weight: 500;
+    border: 2px solid $primario;
+    background-color: #ffffff;
 }
 
-.cons_detalhe {
-    font-size: 14px;
-    margin-top: 12px;
+.cons_botao_pesquisa.ativo {
+    background-color: $primario;
+    color: white;
+    border: none
+}
+
+.cons_botao_pesquisa:hover {
+    color: $primario-hover;
+    border: 2px solid $primario-hover;
+    cursor: pointer;
+}
+
+.cons_botao_pesquisa.ativo:hover {
+    background-color: $primario-hover;
+    color: white;
+    border: none
+}
+
+.cons_botao_pesquisa_container {
+    display: flex;
+    gap: 16px;
 }
 
 table {
@@ -214,4 +208,5 @@ table td:first-child {
 .cons_admin_esq {
     display: flex;
     flex-grow: 1;
+    align-items: center;
 }
