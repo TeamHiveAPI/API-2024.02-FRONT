@@ -25,11 +25,38 @@ function CadastroProjeto() {
     classificacao: "",
   });
 
+  // Upload de Arquivos
+
+  const [arquivosPlanosDeTrabalho, setArquivosPlanosDeTrabalho] = useState<{ file: File | null, nome: string }[]>([]);
+  const [arquivosContratos, setArquivosContratos] = useState<{ file: File | null, nome: string }[]>([]);
+  const [arquivosTermosAditivos, setArquivosTermosAditivos] = useState<{ file: File | null, nome: string }[]>([]);
+  const [arquivosRemovidos, setArquivosRemovidos] = useState<string[]>([]);
+
   useEffect(() => {
     if (id) {
       api.get(`http://localhost:8080/projetos/${id}`)
         .then((response) => {
           setProjeto(response.data);
+  
+          // Carregar arquivos do projeto no estado
+          const arquivosExistentesPlanos = response.data.arquivos.filter((arquivo: { tipoDocumento: string; }) => arquivo.tipoDocumento === 'PLANO_DE_TRABALHO');
+          const arquivosExistentesContratos = response.data.arquivos.filter((arquivo: { tipoDocumento: string; }) => arquivo.tipoDocumento === 'CONTRATO');
+          const arquivosExistentesTermos = response.data.arquivos.filter((arquivo: { tipoDocumento: string; }) => arquivo.tipoDocumento === 'TERMO_ADITIVO');
+  
+          setArquivosPlanosDeTrabalho(arquivosExistentesPlanos.map((arquivo: { nome: any; }) => ({
+            file: null, // Não existe um arquivo File real, pois já está salvo no servidor
+            nome: arquivo.nome
+          })));
+  
+          setArquivosContratos(arquivosExistentesContratos.map((arquivo: { nome: any; }) => ({
+            file: null,
+            nome: arquivo.nome
+          })));
+  
+          setArquivosTermosAditivos(arquivosExistentesTermos.map((arquivo: { nome: any; }) => ({
+            file: null,
+            nome: arquivo.nome
+          })));
         })
         .catch((error) => {
           console.error("Erro ao buscar os dados do projeto", error);
@@ -37,12 +64,7 @@ function CadastroProjeto() {
         });
     }
   }, [id]);
-
-  // Upload de Arquivos
-
-  const [arquivosPlanosDeTrabalho, setArquivosPlanosDeTrabalho] = useState<{ file: File | null, nome: string }[]>([]);
-  const [arquivosContratos, setArquivosContratos] = useState<{ file: File | null, nome: string }[]>([]);
-  const [arquivosTermosAditivos, setArquivosTermosAditivos] = useState<{ file: File | null, nome: string }[]>([]);
+  
 
   // Planos de Trabalho
   const handleFilePlanosDeTrabalhoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +82,11 @@ function CadastroProjeto() {
   };
 
   const removerArquivoPlanos = (index: number) => {
+    const arquivoRemovido = arquivosPlanosDeTrabalho[index].nome;
     setArquivosPlanosDeTrabalho((prevArquivos) =>
       prevArquivos.filter((_, i) => i !== index)
     );
+    setArquivosRemovidos((prevRemovidos) => [...prevRemovidos, arquivoRemovido]);
   };
 
   // Contratos
@@ -80,11 +104,13 @@ function CadastroProjeto() {
     }
   };  
 
-const removerArquivoContrato = (index: number) => {
-  setArquivosContratos((prevArquivos) =>
-    prevArquivos.filter((_, i) => i !== index)
-  );
-};
+  const removerArquivoContrato = (index: number) => {
+    const arquivoRemovido = arquivosContratos[index].nome;
+    setArquivosContratos((prevArquivos) =>
+      prevArquivos.filter((_, i) => i !== index)
+    );
+    setArquivosRemovidos((prevRemovidos) => [...prevRemovidos, arquivoRemovido]);
+  };
 
 // Termos Aditivos
 const handleFileTermosAditivosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,9 +128,11 @@ const handleFileTermosAditivosChange = (e: React.ChangeEvent<HTMLInputElement>) 
 };
 
 const removerArquivoTermosAditivos = (index: number) => {
+  const arquivoRemovido = arquivosTermosAditivos[index].nome;
   setArquivosTermosAditivos((prevArquivos) =>
     prevArquivos.filter((_, i) => i !== index)
   );
+  setArquivosRemovidos((prevRemovidos) => [...prevRemovidos, arquivoRemovido]);
 };
 
 
@@ -138,9 +166,13 @@ const removerArquivoTermosAditivos = (index: number) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const valorNumerico = typeof projeto.valor === "string" 
+    ? parseFloat(projeto.valor.replace(",", ".")) 
+    : projeto.valor;
+    
     const projetoComValorCorrigido = {
       ...projeto,
-      valor: projeto.valor.replace(",", "."),
+      valor: valorNumerico,
     };
 
     const formData = new FormData();
@@ -169,6 +201,10 @@ const removerArquivoTermosAditivos = (index: number) => {
     console.log("Arquivos Planos de Trabalho:", arquivosPlanosDeTrabalho);
     console.log("Arquivos Contratos:", arquivosContratos);
     console.log("Arquivos Termos Aditivos:", arquivosTermosAditivos);
+
+     // Adicionar os arquivos removidos ao formData
+  formData.append("arquivosRemovidos", JSON.stringify(arquivosRemovidos));
+  console.log("Arquivos removidos:", arquivosRemovidos);
 
 
     const url = id ? `http://localhost:8080/projetos/${id}` : 'http://localhost:8080/projetos';
