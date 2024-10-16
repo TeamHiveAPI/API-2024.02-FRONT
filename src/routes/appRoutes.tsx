@@ -7,6 +7,7 @@ import CadastroProjeto from "../pages/CadastroProjeto/CadastroProjeto";
 import Footer from "../components/Footer/Footer";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import NotificacaoToast from "../components/NotificacaoToast/NotificacaoToast";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 export default function AppRoutes() {
   return (
@@ -18,8 +19,8 @@ export default function AppRoutes() {
           <Route path="/" element={<Consulta />} />
           <Route path="/login" element={<Login />} />
           <Route path="/projeto/:id" element={<VisualizacaoProjeto />} />
-          <Route path="/cadastro-projeto" element={<CadastroProjeto />} />
-          <Route path="/edicao-projeto/:id" element={<CadastroProjeto />} />
+          <Route path="/cadastro-projeto" element={<PrivateRoute element={<CadastroProjeto />} />} />
+          <Route path="/edicao-projeto/:id" element={<PrivateRoute element={<CadastroProjeto />} />} />
         </Routes>
     </Router>
     <Footer />
