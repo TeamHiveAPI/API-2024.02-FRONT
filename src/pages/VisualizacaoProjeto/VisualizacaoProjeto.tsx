@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // Para pegar o ID da URL
 import api from "../../utils/axiosConfig";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
+import { jwtDecode } from 'jwt-decode'; // Importar a biblioteca jwt-decode
 import "./VisualizacaoProjeto.scss";
 import ArquivoUpload from "../../components/ArquivoUpload/ArquivoUpload";
 
@@ -12,11 +13,28 @@ function VisualizacaoProjeto() {
 
   const { id } = useParams(); // Captura o id da URL
   const [projeto, setProjeto] = useState<any>(null); // Estado para armazenar o projeto
+  const [admin, setAdmin] = useState<string>("nao"); // Estado para verificar se o usuário é admin
 
   const arquivos = projeto?.arquivos || [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Verificar se o JWT está no localStorage
+    const token = localStorage.getItem("token"); // Troque "jwt" pelo nome da chave que você está usando
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token); // Decodifica o token
+        // Verifica se a role é admin
+        if (decodedToken.role === "ROLE_ADMIN") {
+          setAdmin("sim");
+        } else {
+          setAdmin("nao");
+        }
+      } catch (error) {
+        console.error("Erro ao decodificar o token:", error);
+      }
+    }
 
     // Função para buscar os detalhes do projeto
     async function carregarProjeto() {
@@ -50,7 +68,7 @@ return (
     <>
       <Navbar />
 
-      <SecaoCima titulo="Informações do Projeto" admin="sim" projetoID={id} />
+      <SecaoCima titulo="Informações do Projeto" admin={admin} projetoID={id} />
 
       <div className="visu_container_info margem_10">
         <div className="visu_info_linha">
