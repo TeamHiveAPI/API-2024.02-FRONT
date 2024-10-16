@@ -6,12 +6,14 @@ import VisualizacaoProjeto from "../pages/VisualizacaoProjeto/VisualizacaoProjet
 import CadastroProjeto from "../pages/CadastroProjeto/CadastroProjeto";
 import Footer from "../components/Footer/Footer";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
+import NotificacaoToast from "../components/NotificacaoToast/NotificacaoToast";
 
 export default function AppRoutes() {
   return (
     <>
     <Router>
       <ScrollToTop />
+      <NotificacaoToast />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/projeto/:id" element={<VisualizacaoProjeto />} />

@@ -91,11 +91,11 @@ function Consulta() {
         </div>
         <div className="cons_botoes_admin">
           <button className="cons_botao_grande" onClick={() => navigate("/cadastro-projeto")}>
-            <img src="img/criar_projeto.svg" alt="Cadastrar Projeto"/>
+            <img src="/img/criar_projeto.svg" alt="Cadastrar Projeto"/>
             <p>Cadastrar Projeto</p>
           </button>
           <button className="cons_botao_grande" onClick={() => navigate("/dashboard")}>
-            <img src="img/dashboard.svg" alt="Dashboard"/>
+            <img src="/img/dashboard.svg" alt="Dashboard"/>
             <p>Dashboard</p>
           </button>
         </div>
@@ -110,7 +110,7 @@ function Consulta() {
             value={termoPesquisa}
             onChange={(e) => setTermoPesquisa(e.target.value)}
           />
-          <BotaoCTA img="img/pesquisa.svg" escrito="Buscar" aparencia="primario" onClick={handleSearch} />
+          <BotaoCTA img="/img/pesquisa.svg" escrito="Buscar" aparencia="primario" onClick={handleSearch} />
         </div>
         <div className="cons_botao_pesquisa_container">
           <button className={`cons_botao_pesquisa ${ativo === 'Tudo' ? 'ativo' : ''}`}onClick={() => handleBotaoPesquisa('Tudo')}> Tudo </button>
@@ -140,7 +140,7 @@ function Consulta() {
               <tr key={projeto.id}>
                 <td>
                   <img
-                    src="img/detalhe_arquivo.svg"
+                    src="/img/detalhe_arquivo.svg"
                     alt="detalhe"
                     className="detalhe_projeto"
                     onClick={() => navigate(`/projeto/${projeto.id}`)}

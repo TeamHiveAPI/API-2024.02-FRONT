@@ -6,7 +6,6 @@ import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
 import SubirArquivo from "../../components/SubirArquivo/SubirArquivo";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
 import { toast } from "react-toastify";
-import NotificacaoToast from "../../components/NotificacaoToast/NotificacaoToast";
 import "../CadastroProjeto/CadastroProjeto.scss";
 
 function CadastroProjeto() {
@@ -69,14 +68,23 @@ function CadastroProjeto() {
   // Planos de Trabalho
   const handleFilePlanosDeTrabalhoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const novosArquivos = Array.from(e.target.files).map((file) => ({
-        file: file,
-        nome: file.name
-      }));
+      const maxFileSize = 10 * 1024 * 1024; // 10MB em bytes
+  
+      // Cria uma lista de arquivos válidos, filtrando os arquivos que excedem o limite de 10MB
+      const novosArquivos = Array.from(e.target.files)
+        .filter(file => file.size <= maxFileSize) // Filtra arquivos maiores que 10MB
+        .map(file => ({
+          file: file,
+          nome: file.name
+        }));
+  
+      if (novosArquivos.length < e.target.files.length) {
+        toast.warn("Algum arquivo excedeu o limite de 10MB e não foi adicionado.");
+      }
   
       setArquivosPlanosDeTrabalho((prevArquivos) => [
         ...prevArquivos,
-        ...novosArquivos // Adiciona todos os arquivos selecionados ao estado
+        ...novosArquivos
       ]);
     }
   };
@@ -92,17 +100,26 @@ function CadastroProjeto() {
   // Contratos
   const handleFileContratosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const novosArquivos = Array.from(e.target.files).map((file) => ({
-        file: file,
-        nome: file.name
-      }));
+      const maxFileSize = 10 * 1024 * 1024; // 10MB em bytes
+  
+      const novosArquivos = Array.from(e.target.files)
+        .filter(file => file.size <= maxFileSize) // Filtra arquivos maiores que 10MB
+        .map(file => ({
+          file: file,
+          nome: file.name
+        }));
+  
+      if (novosArquivos.length < e.target.files.length) {
+        toast.warn("Algum arquivo excedeu o limite de 10MB e não foi adicionado.");
+      }
   
       setArquivosContratos((prevArquivos) => [
         ...prevArquivos,
         ...novosArquivos
       ]);
     }
-  };  
+  };
+    
 
   const removerArquivoContrato = (index: number) => {
     const arquivoRemovido = arquivosContratos[index].nome;
@@ -115,10 +132,18 @@ function CadastroProjeto() {
 // Termos Aditivos
 const handleFileTermosAditivosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   if (e.target.files && e.target.files.length > 0) {
-    const novosArquivos = Array.from(e.target.files).map((file) => ({
-      file: file,
-      nome: file.name
-    }));
+    const maxFileSize = 10 * 1024 * 1024; // 10MB em bytes
+
+    const novosArquivos = Array.from(e.target.files)
+      .filter(file => file.size <= maxFileSize) // Filtra arquivos maiores que 10MB
+      .map(file => ({
+        file: file,
+        nome: file.name
+      }));
+
+    if (novosArquivos.length < e.target.files.length) {
+      toast.warn("Algum arquivo excedeu o limite de 10MB e não foi adicionado.");
+    }
 
     setArquivosTermosAditivos((prevArquivos) => [
       ...prevArquivos,
@@ -126,6 +151,7 @@ const handleFileTermosAditivosChange = (e: React.ChangeEvent<HTMLInputElement>) 
     ]);
   }
 };
+
 
 const removerArquivoTermosAditivos = (index: number) => {
   const arquivoRemovido = arquivosTermosAditivos[index].nome;
@@ -230,7 +256,6 @@ const removerArquivoTermosAditivos = (index: number) => {
   return (
     <>
       <Navbar />
-      <NotificacaoToast />
       <SecaoCima titulo={id ? "Editar Projeto" : "Cadastrar Novo Projeto"} />
       <div className="visu_container_info margem_10">
         <h2 className="cadpro_titulo">Informações Principais</h2>

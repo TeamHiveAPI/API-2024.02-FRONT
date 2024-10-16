@@ -61,15 +61,11 @@
 }
 
 .cons_botao_pesquisa:hover {
-    color: $primario-hover;
-    border: 2px solid $primario-hover;
     cursor: pointer;
 }
 
 .cons_botao_pesquisa.ativo:hover {
-    background-color: $primario-hover;
-    color: white;
-    border: none
+    cursor: pointer;
 }
 
 .cons_botao_pesquisa_container {

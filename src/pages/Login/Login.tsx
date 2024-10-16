@@ -7,7 +7,6 @@ import FormInputSenha from "../../components/FormInput/FormInputSenha";
 import FormInputEmail from "../../components/FormInput/FormInputEmail";
 import "./Login.scss";
 import { toast } from "react-toastify";
-import NotificacaoToast from "../../components/NotificacaoToast/NotificacaoToast";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -43,8 +42,6 @@ function Login() {
     return (
         <>
             <Navbar />
-
-            <NotificacaoToast />
 
             <div className="login_container">
                 <div className="margem_10 login_box_container">
