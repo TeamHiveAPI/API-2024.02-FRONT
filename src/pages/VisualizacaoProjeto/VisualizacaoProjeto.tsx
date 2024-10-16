@@ -58,11 +58,31 @@ function VisualizacaoProjeto() {
     nome: string;
     tamanho: number;
     url: string;
+    tipoDocumento: string;
 }
 
   interface Projeto {
     arquivos?: Arquivo[];
 }
+
+const formatarTipoDocumento = (tipoDocumento: string) => {
+  return tipoDocumento.replace(/_/g, ' ').toUpperCase();
+};
+
+const ordenarArquivos = (arquivos: Arquivo[]) => {
+  const prioridade: { [key: string]: number } = {
+      PLANO_DE_TRABALHO: 1,
+      TERMO_ADITIVO: 2,
+      CONTRATOS: 3,
+  };
+
+  return arquivos.sort((a, b) => {
+      const prioridadeA = prioridade[a.tipoDocumento] || 4;
+      const prioridadeB = prioridade[b.tipoDocumento] || 4;
+
+      return prioridadeA - prioridadeB;
+  });
+};
 
 return (
     <>
@@ -111,13 +131,13 @@ return (
                 <div className="visu_container_info arquivo margem_10">
                     <h2 className="visu_arquivo_titulo">Arquivos Anexados</h2>
                     <div className="visu_arquivo_container">
-                    {arquivos.map((arquivo: Arquivo) => (
+                    {ordenarArquivos(arquivos).map((arquivo: Arquivo) => (
                         <ArquivoUpload
                             key={arquivo.id}
                             titulo={arquivo.nome}
                             tamanho={(arquivo.tamanho / 1024 / 1024).toFixed(2) + 'MB'}
                             link={arquivo.url}
-                            tipo={"Mudar Aqui"}
+                            tipo={formatarTipoDocumento(arquivo.tipoDocumento)}
                         />
                     ))}
                     </div>
