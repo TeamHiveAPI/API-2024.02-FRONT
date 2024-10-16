@@ -22,11 +22,16 @@
     color: $primario;
 }
 
-.nav_dir img {
+.nav_dir {
+    display: flex;
+    gap: 32px;
+}
+
+.nav img {
     width: 32px;
 }
 
-.nav_dir {
+.nav_botao {
     display: flex;
     font-weight: 600;
     align-items: center;
@@ -37,7 +42,11 @@
     border-radius: 8px;
 }
 
-.nav_dir:hover {
+.nav_botao img {
+    width: 36px;
+}
+
+.nav_botao:hover {
     background-color: $cinza-claro;
     cursor: pointer;
     color: $primario-hover;

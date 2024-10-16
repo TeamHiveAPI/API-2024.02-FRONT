@@ -28,8 +28,8 @@ function Login() {
                 localStorage.setItem("token", token);
 
                 setTimeout(() => {
-                    navigate("/consulta");
-                  }, 3000);
+                    navigate("/");
+                  });
                 console.log(response.data);
             })
             .catch((error: AxiosError) => {

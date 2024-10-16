@@ -15,11 +15,11 @@ export default function AppRoutes() {
       <ScrollToTop />
       <NotificacaoToast />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Consulta />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/projeto/:id" element={<VisualizacaoProjeto />} />
-          <Route path="/consulta" element={<Consulta />} />
           <Route path="/cadastro-projeto" element={<CadastroProjeto />} />
-          <Route path="/edicao-projeto/:id" element={<CadastroProjeto />} /> {/* Rota para edição */}
+          <Route path="/edicao-projeto/:id" element={<CadastroProjeto />} />
         </Routes>
     </Router>
     <Footer />
