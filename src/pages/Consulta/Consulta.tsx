@@ -115,6 +115,7 @@ function Consulta() {
         <div className="cons_botao_pesquisa_container">
           <button className={`cons_botao_pesquisa ${ativo === 'Tudo' ? 'ativo' : ''}`}onClick={() => handleBotaoPesquisa('Tudo')}> Tudo </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Ref. Projeto' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Ref. Projeto')}> Ref. Projeto </button>
+          <button className={`cons_botao_pesquisa ${ativo === 'ID' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('ID')}> ID </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Coordenador' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Coordenador')}> Coordenador </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Contratante' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Contratante')}>Contratante </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Data de Início' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Data de Início')}> Data de Início </button>
