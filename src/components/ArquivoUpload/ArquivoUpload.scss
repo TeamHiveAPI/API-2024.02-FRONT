@@ -1,0 +1,36 @@
+@import "../../global.scss";
+
+.up_wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    padding: 32px;
+    border-radius: 12px;
+    align-items: center;
+    box-shadow: 0px 3px 0px 0px #C4C4C4;
+    font-size: 16px;
+}
+
+.up_img {
+    width: 80px;
+    height: 80px;
+    padding: 16px;
+    background-color: $primario;
+    border-radius: 8px;
+}
+
+.up_titulo {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.up_azul {
+    font-weight: 600;
+    color: $primario;
+}
+
+.up_wrapper:hover {
+    cursor: pointer;
+    filter: brightness(0.95)
+}

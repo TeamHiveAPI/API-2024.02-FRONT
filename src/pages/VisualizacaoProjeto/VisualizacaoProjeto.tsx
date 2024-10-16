@@ -6,10 +6,14 @@ import { useParams } from "react-router-dom"; // Para pegar o ID da URL
 import api from "../../utils/axiosConfig";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
 import "./VisualizacaoProjeto.scss";
+import ArquivoUpload from "../../components/ArquivoUpload/ArquivoUpload";
 
 function VisualizacaoProjeto() {
+
   const { id } = useParams(); // Captura o id da URL
   const [projeto, setProjeto] = useState<any>(null); // Estado para armazenar o projeto
+
+  const arquivos = projeto?.arquivos || [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +35,18 @@ function VisualizacaoProjeto() {
     return <p>Carregando...</p>;
   }
 
-  return (
+  interface Arquivo {
+    id: number;
+    nome: string;
+    tamanho: number;
+    url: string;
+}
+
+  interface Projeto {
+    arquivos?: Arquivo[];
+}
+
+return (
     <>
       <Navbar />
 
@@ -73,7 +88,23 @@ function VisualizacaoProjeto() {
           <p>{projeto.dataTermino}</p>
         </div>
       </div>
-      {/* Outros componentes, como arquivos e termos aditivos */}
+
+      {arquivos.length > 0 && (
+                <div className="visu_container_info arquivo margem_10">
+                    <h2 className="visu_arquivo_titulo">Arquivos Anexados</h2>
+                    <div className="visu_arquivo_container">
+                    {arquivos.map((arquivo: Arquivo) => (
+                        <ArquivoUpload
+                            key={arquivo.id}
+                            titulo={arquivo.nome}
+                            tamanho={(arquivo.tamanho / 1024 / 1024).toFixed(2) + 'MB'}
+                            link={arquivo.url}
+                            tipo={"Mudar Aqui"}
+                        />
+                    ))}
+                    </div>
+                </div>
+            )}
     </>
   );
 }
