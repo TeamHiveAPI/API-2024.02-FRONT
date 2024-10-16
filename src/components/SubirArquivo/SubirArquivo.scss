@@ -11,7 +11,10 @@
         border-radius: 12px 0px 0px 12px;
         color: #606060;
         font-size: 16px;
-        width: 280px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 281px;
     }
 
 .subarq_botao_subir {
