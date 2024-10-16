@@ -244,7 +244,7 @@ const removerArquivoTermosAditivos = (index: number) => {
       .then(() => {
         toast.success(`Projeto ${id ? 'atualizado' : 'cadastrado'} com sucesso!`);
         setTimeout(() => {
-          navigate("/consulta");
+          navigate("/");
         }, 3000);
       })
       .catch((error) => {
