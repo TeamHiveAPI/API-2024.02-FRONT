@@ -13,7 +13,7 @@ function CadastroProjeto() {
   const { id } = useParams<{ id: string }>();
 
   const [projeto, setProjeto] = useState({
-    referencia: "",
+    titulo: "",
     situacao: "",
     empresa: "",
     coordenador: "",
@@ -262,12 +262,12 @@ const removerArquivoTermosAditivos = (index: number) => {
         <form className="cadpro_container" onSubmit={handleSubmit}>
           <div className="cadpro_secao">
             <div className="cadpro_input maior">
-              <label htmlFor="referencia">Referência do Projeto</label>
+              <label htmlFor="titulo">Título do Projeto</label>
               <input
                 type="text"
-                id="referencia"
+                id="titulo"
                 placeholder="Digite aqui..."
-                value={projeto.referencia}
+                value={projeto.titulo}
                 onChange={handleChange}
               />
             </div>

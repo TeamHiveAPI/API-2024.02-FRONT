@@ -92,8 +92,8 @@ return (
 
       <div className="visu_container_info margem_10">
         <div className="visu_info_linha">
-          <h3>Referência do Projeto</h3>
-          <p>{projeto.referencia}</p>
+          <h3>Título do Projeto</h3>
+          <p>{projeto.titulo}</p>
         </div>
         <hr className="divisoria" />
         <div className="visu_info_linha">

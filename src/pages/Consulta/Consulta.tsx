@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 
 interface Projeto {
   id: number;
-  referencia: string;
+  titulo: string;
   dataInicio: string;
   dataTermino: string;
   coordenador: string;
@@ -112,8 +112,8 @@ function Consulta() {
         </div>
         <div className="cons_botao_pesquisa_container">
           <button className={`cons_botao_pesquisa ${ativo === 'Tudo' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Tudo')}> Tudo </button>
+          <button className={`cons_botao_pesquisa ${ativo === 'Título Projeto' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Título Projeto')}> Título Projeto </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Ref. Projeto' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Ref. Projeto')}> Ref. Projeto </button>
-          <button className={`cons_botao_pesquisa ${ativo === 'ID' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('ID')}> ID </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Coordenador' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Coordenador')}> Coordenador </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Contratante' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Contratante')}>Contratante </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Data de Início' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Data de Início')}> Data de Início </button>
@@ -125,7 +125,7 @@ function Consulta() {
         <thead>
           <tr>
             <th className="th_botao"> </th>
-            <th className="th_referencia">Referência do Projeto</th>
+            <th className="th_titulo">Título do Projeto</th>
             <th className="th_data">Início</th>
             <th className="th_data">Término</th>
             <th className="th_coordenador">Coordenador</th>
@@ -144,7 +144,7 @@ function Consulta() {
                     onClick={() => navigate(`/projeto/${projeto.id}`)}
                   />
                 </td>
-                <td className="referencia">{projeto.referencia}</td>
+                <td className="titulo">{projeto.titulo}</td>
                 <td>{formatarData(projeto.dataInicio)}</td>
                 <td>{projeto.dataTermino ? formatarData(projeto.dataTermino) : "Em Processo"}</td>
                 <td className="coordenador">{projeto.coordenador}</td>
