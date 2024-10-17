@@ -35,20 +35,42 @@ function Consulta() {
   }
 
   const handleSearch = () => {
-    if (ativo === "Ref. Projeto" && !isNaN(Number(termoPesquisa))) {
-      // Se o filtro for "Ref. Projeto" e o termo for um número, buscar por ID
+    let endpoint = '';
+    const params: any = {};
+  
+    if (ativo === 'Ref. Projeto' && !isNaN(Number(termoPesquisa))) {
+      // Buscar por ID quando o filtro 'Ref. Projeto' estiver ativo
       api.get(`http://localhost:8080/projetos/${termoPesquisa}`)
         .then(response => {
-          setProjetos([response.data]); // Retorna apenas o projeto encontrado pelo ID
+          setProjetos([response.data]); // Retorna o projeto encontrado pelo ID
         })
         .catch(error => {
           console.error("Erro ao buscar projeto por ID:", error);
           setProjetos([]); // Limpa a lista se o projeto não for encontrado
         });
     } else {
-      // Caso contrário, buscar pelos outros filtros
-      const params = { termo: termoPesquisa };
+      // Dependendo do filtro ativo, definir o campo da busca
+      switch (ativo) {
+        case 'Título Projeto':
+          params.titulo = termoPesquisa;
+          break;
+        case 'Coordenador':
+          params.coordenador = termoPesquisa;
+          break;
+        case 'Contratante':
+          params.contratante = termoPesquisa;
+          break;
+        case 'Data de Início':
+          params.dataInicio = termoPesquisa;
+          break;
+        case 'Data de Término':
+          params.dataTermino = termoPesquisa;
+          break;
+        default:
+          params.termo = termoPesquisa; // Busca geral
+      }
   
+      // Fazer a requisição de busca com o campo correto
       api.get('http://localhost:8080/projetos/search', { params })
         .then(response => {
           setProjetos(response.data); // Armazenar os projetos retornados
@@ -58,6 +80,7 @@ function Consulta() {
         });
     }
   };
+  
   
 
   useEffect(() => {
