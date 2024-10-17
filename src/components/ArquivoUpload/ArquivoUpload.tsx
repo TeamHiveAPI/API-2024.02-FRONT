@@ -5,11 +5,12 @@ interface ArquivoUploadProps {
     tamanho: string;
     link: string;
     tipo: string;
+    onDownload: () => void; // Add onDownload property
 }
 
-function ArquivoUpload({ titulo, tamanho, link, tipo }: ArquivoUploadProps) {
+function ArquivoUpload({ titulo, tamanho, link, tipo, onDownload }: ArquivoUploadProps) { // Inclua onDownload nos parâmetros
     const handleDownload = () => {
-        window.open(link, "_blank");
+        onDownload(); // Chame a função de download passada como prop
     };
 
     // Função para verificar a extensão do arquivo e definir o ícone apropriado

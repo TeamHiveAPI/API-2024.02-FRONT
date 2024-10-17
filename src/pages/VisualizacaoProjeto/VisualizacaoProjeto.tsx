@@ -1,31 +1,27 @@
-import BotaoCTA from "../../components/BotaoCTA/BotaoCTA";
-import CardArquivo from "../../components/CardArquivo/CardArquivo";
-import Navbar from "../../components/Navbar/Navbar";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // Para pegar o ID da URL
+import { useParams } from "react-router-dom";
 import api from "../../utils/axiosConfig";
+import Navbar from "../../components/Navbar/Navbar";
 import SecaoCima from "../../components/SecaoCima/SecaoCima";
-import { jwtDecode } from 'jwt-decode'; // Importar a biblioteca jwt-decode
-import "./VisualizacaoProjeto.scss";
+import { jwtDecode } from 'jwt-decode';
 import ArquivoUpload from "../../components/ArquivoUpload/ArquivoUpload";
 
-function VisualizacaoProjeto() {
+import "./VisualizacaoProjeto.scss";
 
-  const { id } = useParams(); // Captura o id da URL
-  const [projeto, setProjeto] = useState<any>(null); // Estado para armazenar o projeto
-  const [admin, setAdmin] = useState<string>("nao"); // Estado para verificar se o usuário é admin
+function VisualizacaoProjeto() {
+  const { id } = useParams();
+  const [projeto, setProjeto] = useState<any>(null);
+  const [admin, setAdmin] = useState<string>("nao");
 
   const arquivos = projeto?.arquivos || [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Verificar se o JWT está no localStorage
-    const token = localStorage.getItem("token"); // Troque "jwt" pelo nome da chave que você está usando
+    const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decodedToken: any = jwtDecode(token); // Decodifica o token
-        // Verifica se a role é admin
+        const decodedToken: any = jwtDecode(token);
         if (decodedToken.role === "ROLE_ADMIN") {
           setAdmin("sim");
         } else {
@@ -36,7 +32,6 @@ function VisualizacaoProjeto() {
       }
     }
 
-    // Função para buscar os detalhes do projeto
     async function carregarProjeto() {
       try {
         const response = await api.get(`http://localhost:8080/projetos/${id}`);
@@ -59,32 +54,53 @@ function VisualizacaoProjeto() {
     tamanho: number;
     url: string;
     tipoDocumento: string;
-}
+  }
 
-  interface Projeto {
-    arquivos?: Arquivo[];
-}
+  const formatarTipoDocumento = (tipoDocumento: string) => {
+    return tipoDocumento.replace(/_/g, " ").toUpperCase();
+  };
 
-const formatarTipoDocumento = (tipoDocumento: string) => {
-  return tipoDocumento.replace(/_/g, ' ').toUpperCase();
-};
-
-const ordenarArquivos = (arquivos: Arquivo[]) => {
-  const prioridade: { [key: string]: number } = {
+  const ordenarArquivos = (arquivos: Arquivo[]) => {
+    const prioridade: { [key: string]: number } = {
       PLANO_DE_TRABALHO: 1,
       TERMO_ADITIVO: 2,
       CONTRATOS: 3,
+    };
+
+    return arquivos.sort((a, b) => {
+      const prioridadeA = prioridade[a.tipoDocumento] || 99;
+      const prioridadeB = prioridade[b.tipoDocumento] || 99;
+      return prioridadeA - prioridadeB;
+    });
   };
 
-  return arquivos.sort((a, b) => {
-      const prioridadeA = prioridade[a.tipoDocumento] || 4;
-      const prioridadeB = prioridade[b.tipoDocumento] || 4;
+  const handleDownload = async (url: string, nome: string) => {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'include', // Inclui cookies de autenticação, se necessário
+        });
 
-      return prioridadeA - prioridadeB;
-  });
+        if (!response.ok) {
+            throw new Error('Erro ao fazer a requisição de download');
+        }
+
+        const blob = await response.blob(); // Obtém o arquivo como blob
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob); // Cria um objeto URL
+        link.download = nome; // Define o nome do arquivo ao baixar
+
+        document.body.appendChild(link);
+        link.click(); // Simula o clique para download
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(link.href); // Libera o objeto URL
+    } catch (error) {
+        console.error("Erro ao baixar o arquivo:", error);
+        alert('Erro ao baixar o arquivo. Tente novamente mais tarde.');
+    }
 };
 
-return (
+  return (
     <>
       <Navbar />
 
@@ -92,8 +108,8 @@ return (
 
       <div className="visu_container_info margem_10">
         <div className="visu_info_linha">
-          <h3>Título do Projeto</h3>
-          <p>{projeto.titulo}</p>
+          <h3>Referência do Projeto</h3>
+          <p>{projeto.referencia}</p>
         </div>
         <hr className="divisoria" />
         <div className="visu_info_linha">
@@ -128,21 +144,22 @@ return (
       </div>
 
       {arquivos.length > 0 && (
-                <div className="visu_container_info arquivo margem_10">
-                    <h2 className="visu_arquivo_titulo">Arquivos Anexados</h2>
-                    <div className="visu_arquivo_container">
-                    {ordenarArquivos(arquivos).map((arquivo: Arquivo) => (
-                        <ArquivoUpload
-                            key={arquivo.id}
-                            titulo={arquivo.nome}
-                            tamanho={(arquivo.tamanho / 1024 / 1024).toFixed(2) + 'MB'}
-                            link={arquivo.url}
-                            tipo={formatarTipoDocumento(arquivo.tipoDocumento)}
-                        />
-                    ))}
-                    </div>
-                </div>
-            )}
+        <div className="visu_container_info arquivo margem_10">
+          <h2 className="visu_arquivo_titulo">Arquivos Anexados</h2>
+          <div className="visu_arquivo_container">
+            {ordenarArquivos(arquivos).map((arquivo: Arquivo) => (
+              <ArquivoUpload
+                key={arquivo.id}
+                titulo={arquivo.nome}
+                tamanho={(arquivo.tamanho / 1024 / 1024).toFixed(2) + 'MB'}
+                link={arquivo.url}
+                tipo={formatarTipoDocumento(arquivo.tipoDocumento)}
+                onDownload={() => handleDownload(arquivo.url, arquivo.nome)} // Passa o nome do arquivo
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }
