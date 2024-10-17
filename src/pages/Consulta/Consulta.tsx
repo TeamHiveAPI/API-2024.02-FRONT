@@ -35,16 +35,30 @@ function Consulta() {
   }
 
   const handleSearch = () => {
-    const params = { termo: termoPesquisa };
-
-    api.get('http://localhost:8080/projetos/search', { params })
-      .then(response => {
-        setProjetos(response.data); // Armazenar os projetos retornados
-      })
-      .catch(error => {
-        console.error("Erro ao buscar projetos:", error);
-      });
+    if (ativo === "Ref. Projeto" && !isNaN(Number(termoPesquisa))) {
+      // Se o filtro for "Ref. Projeto" e o termo for um número, buscar por ID
+      api.get(`http://localhost:8080/projetos/${termoPesquisa}`)
+        .then(response => {
+          setProjetos([response.data]); // Retorna apenas o projeto encontrado pelo ID
+        })
+        .catch(error => {
+          console.error("Erro ao buscar projeto por ID:", error);
+          setProjetos([]); // Limpa a lista se o projeto não for encontrado
+        });
+    } else {
+      // Caso contrário, buscar pelos outros filtros
+      const params = { termo: termoPesquisa };
+  
+      api.get('http://localhost:8080/projetos/search', { params })
+        .then(response => {
+          setProjetos(response.data); // Armazenar os projetos retornados
+        })
+        .catch(error => {
+          console.error("Erro ao buscar projetos:", error);
+        });
+    }
   };
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
