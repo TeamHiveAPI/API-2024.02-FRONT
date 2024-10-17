@@ -139,12 +139,21 @@ function Consulta() {
 
       <div className="margem_10 cons_container">
         <div className="cons_barra_pesquisa">
-          <input
-            type="text"
-            placeholder="Pesquisar"
-            value={termoPesquisa}
-            onChange={(e) => setTermoPesquisa(e.target.value)}
-          />
+           {/* Se o filtro for de data, mostrar input do tipo date */}
+           {(ativo === 'Data de Início' || ativo === 'Data de Término') ? (
+            <input
+              type="date"
+              value={termoPesquisa}
+              onChange={(e) => setTermoPesquisa(e.target.value)}
+            />
+          ) : (
+            <input
+              type="text"
+              placeholder="Pesquisar"
+              value={termoPesquisa}
+              onChange={(e) => setTermoPesquisa(e.target.value)}
+            />
+          )}
           <BotaoCTA img="/img/pesquisa.svg" escrito="Buscar" aparencia="primario" onClick={handleSearch} />
         </div>
         <div className="cons_botao_pesquisa_container">
