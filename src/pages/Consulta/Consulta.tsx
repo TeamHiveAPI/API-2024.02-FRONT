@@ -35,19 +35,18 @@ function Consulta() {
   }
 
   const handleSearch = () => {
-    api.get('http://localhost:8080/projetos/search', {
-      params: { coordenador: termoPesquisa }
-    })
-    .then(response => {
-      setProjetos(response.data);  // Armazenar os projetos retornados
-    })
-    .catch(error => {
-      console.error("Erro ao buscar projetos:", error);
-    });
+    const params = { termo: termoPesquisa };
+
+    api.get('http://localhost:8080/projetos/search', { params })
+      .then(response => {
+        setProjetos(response.data); // Armazenar os projetos retornados
+      })
+      .catch(error => {
+        console.error("Erro ao buscar projetos:", error);
+      });
   };
 
   useEffect(() => {
-
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -71,7 +70,6 @@ function Consulta() {
     }
 
     carregarTabelaConsulta();
-
   }, [navigate]);
 
   return (
@@ -113,7 +111,7 @@ function Consulta() {
           <BotaoCTA img="/img/pesquisa.svg" escrito="Buscar" aparencia="primario" onClick={handleSearch} />
         </div>
         <div className="cons_botao_pesquisa_container">
-          <button className={`cons_botao_pesquisa ${ativo === 'Tudo' ? 'ativo' : ''}`}onClick={() => handleBotaoPesquisa('Tudo')}> Tudo </button>
+          <button className={`cons_botao_pesquisa ${ativo === 'Tudo' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Tudo')}> Tudo </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Ref. Projeto' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Ref. Projeto')}> Ref. Projeto </button>
           <button className={`cons_botao_pesquisa ${ativo === 'ID' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('ID')}> ID </button>
           <button className={`cons_botao_pesquisa ${ativo === 'Coordenador' ? 'ativo' : ''}`} onClick={() => handleBotaoPesquisa('Coordenador')}> Coordenador </button>
