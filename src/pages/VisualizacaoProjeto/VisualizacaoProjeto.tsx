@@ -108,8 +108,8 @@ function VisualizacaoProjeto() {
 
       <div className="visu_container_info margem_10">
         <div className="visu_info_linha">
-          <h3>Referência do Projeto</h3>
-          <p>{projeto.referencia}</p>
+          <h3>Título do Projeto</h3>
+          <p>{projeto.titulo}</p>
         </div>
         <hr className="divisoria" />
         <div className="visu_info_linha">
@@ -134,12 +134,12 @@ function VisualizacaoProjeto() {
         <hr className="divisoria" />
         <div className="visu_info_linha">
           <h3>Data de Início</h3>
-          <p>{projeto.dataInicio}</p>
+          <p>{new Date(projeto.dataInicio).toLocaleDateString('pt-BR')}</p>
         </div>
         <hr className="divisoria" />
         <div className="visu_info_linha">
           <h3>Data de Término</h3>
-          <p>{projeto.dataTermino}</p>
+          <p>{new Date(projeto.dataTermino).toLocaleDateString('pt-BR')}</p>
         </div>
       </div>
 
