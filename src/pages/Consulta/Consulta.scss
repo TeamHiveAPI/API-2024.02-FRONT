@@ -131,31 +131,35 @@ table td:first-child {
 
 .cons_botoes_admin {
     display: flex;
+    flex-direction: column;
     gap: 16px;
 }
 
 .cons_botao_grande {
     display: flex;
-    gap: 24px;
+    gap: 16px;
     background-color: $primario;
     color: white;
     align-items: center;
     justify-content: center;
-    padding: 32px;
+    padding: 16px;
     margin-bottom: 32px !important;
-    border-radius: 16px;
-    font-size: 1.25rem;
+    border-radius: 8px;
+    font-size: 1rem;
     font-weight: 500;
     text-align: center;
 }
 
+.cons_botao_grande.cima{
+    margin-bottom: 0px !important; 
+}
 .cons_botao_grande:hover {
     background-color: $primario-hover;
     cursor: pointer;
 }
 
 .cons_botao_grande img {
-    width: 40px;
+    width: 24px;
 }
 
 .referencia {
