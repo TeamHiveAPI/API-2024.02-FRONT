@@ -61,3 +61,27 @@
     gap: 16px;
     flex-wrap: wrap;
 }
+
+.visu_arquivo_cima {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.visu_arquivo_dica {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    color: $primario;
+    border: 2px solid $primario;
+    padding: 12px;
+    margin-bottom: 32px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: 50%;
+}
+
+.visu_arquivo_dica img {
+    width: 24px;
+}

@@ -145,7 +145,13 @@ function VisualizacaoProjeto() {
 
       {arquivos.length > 0 && (
         <div className="visu_container_info arquivo margem_10">
+          <div className="visu_arquivo_cima">
           <h2 className="visu_arquivo_titulo">Arquivos Anexados</h2>
+          <div className="visu_arquivo_dica">
+            <img src="/img/info.svg" />
+            <p>Clique em um arquivo para baixá-lo.</p>
+          </div>
+          </div>
           <div className="visu_arquivo_container">
             {ordenarArquivos(arquivos).map((arquivo: Arquivo) => (
               <ArquivoUpload
