@@ -4,6 +4,7 @@ import "./SecaoCima.scss"
 import api from "../../utils/axiosConfig";
 import { toast, ToastContainer } from 'react-toastify';
 import NotificacaoToast from '../NotificacaoToast/NotificacaoToast';
+import { useLocation } from 'react-router-dom';
 
 interface SecaoCimaProps {
   titulo: string;
@@ -12,7 +13,9 @@ interface SecaoCimaProps {
 }
 
 const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleVoltar = () => {
     navigate(-1); // Voltar para a pág. anterior
@@ -29,7 +32,7 @@ const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
         await api.delete(`http://localhost:8080/projetos/${projetoID}`);
         toast.success('Projeto excluído com sucesso!');
         setTimeout(() => {
-          navigate("/consulta");
+          navigate("/");
         }, 3000);
       } catch (error) {
         console.error('Erro ao excluir o projeto:', error);
@@ -46,7 +49,10 @@ const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
     
     <div>
       <div className="secao_cima margem_10">
-        <h2>{titulo}</h2>
+        <div className="secao_cima_titulo">
+        {location.pathname !== '/cadastro-projeto' && <p>ID {projetoID}</p>}
+          <h2>{titulo}</h2>
+        </div>
         <div className="secao_cima_botoes">
           <BotaoCTA
             img="/img/voltar.svg"

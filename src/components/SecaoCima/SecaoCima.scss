@@ -21,3 +21,18 @@
     flex-direction: row-reverse;
     gap: 20px;
 }
+
+.secao_cima_titulo {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.secao_cima_titulo p {
+    background-color: $primario;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+}
