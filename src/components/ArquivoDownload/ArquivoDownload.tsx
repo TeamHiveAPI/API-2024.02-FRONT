@@ -9,14 +9,17 @@ interface ArquivoDownloadProps {
 
 const ArquivoDownload: React.FC<ArquivoDownloadProps> = ({ titulo, tamanho, link, tipo }) => {
   const handleDownload = async (event: React.MouseEvent) => {
-    event.preventDefault(); // Evita comportamento padrão do link
+    event.preventDefault(); // Evita o comportamento padrão do link
 
     try {
       const anchor = document.createElement('a');
       anchor.href = link;
 
-      const fileExtension = link.split('.').pop(); // Obtém a extensão do link
-      anchor.download = titulo.toLowerCase().endsWith(`.${fileExtension}`) ? titulo : `${titulo}.${fileExtension}`; // Define o nome do arquivo
+      // Obtém a extensão do link e define o nome do arquivo
+      const fileExtension = link.split('.').pop();
+      anchor.download = titulo.toLowerCase().endsWith(`.${fileExtension}`)
+        ? titulo
+        : `${titulo}.${fileExtension}`;
 
       document.body.appendChild(anchor); // Adiciona o link ao corpo do documento
       anchor.click(); // Simula o clique

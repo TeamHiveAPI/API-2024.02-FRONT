@@ -74,26 +74,26 @@ function VisualizacaoProjeto() {
     });
   };
 
-  const handleDownload = async (url: string, nome: string) => {
+  // Função para baixar o arquivo
+  const handleDownload = async (nome: string) => {
     try {
-        const response = await fetch(url, {
-            method: 'GET',
-            credentials: 'include', // Inclui cookies de autenticação, se necessário
+        const response = await api.get(`/projetos/download/${nome}`, {
+            responseType: 'blob' // Garante que a resposta seja tratada como um arquivo binário
         });
 
-        if (!response.ok) {
-            throw new Error('Erro ao fazer a requisição de download');
+        if (!response || response.status !== 200) {
+            throw new Error('Erro ao fazer o download');
         }
 
-        const blob = await response.blob(); // Obtém o arquivo como blob
+        const blob = new Blob([response.data]); // Converte o arquivo recebido em um blob
         const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob); // Cria um objeto URL
+        link.href = window.URL.createObjectURL(blob); // Cria uma URL para o blob
         link.download = nome; // Define o nome do arquivo ao baixar
-
         document.body.appendChild(link);
-        link.click(); // Simula o clique para download
+        link.click(); // Simula o clique para baixar o arquivo
         document.body.removeChild(link);
-        window.URL.revokeObjectURL(link.href); // Libera o objeto URL
+        window.URL.revokeObjectURL(link.href); // Libera a URL após o uso
+
     } catch (error) {
         console.error("Erro ao baixar o arquivo:", error);
         alert('Erro ao baixar o arquivo. Tente novamente mais tarde.');
@@ -108,8 +108,8 @@ function VisualizacaoProjeto() {
 
       <div className="visu_container_info margem_10">
         <div className="visu_info_linha">
-          <h3>Título do Projeto</h3>
-          <p>{projeto.titulo}</p>
+          <h3>Referência do Projeto</h3>
+          <p>{projeto.referencia}</p>
         </div>
         <hr className="divisoria" />
         <div className="visu_info_linha">
@@ -134,24 +134,18 @@ function VisualizacaoProjeto() {
         <hr className="divisoria" />
         <div className="visu_info_linha">
           <h3>Data de Início</h3>
-          <p>{new Date(projeto.dataInicio).toLocaleDateString('pt-BR')}</p>
+          <p>{projeto.dataInicio}</p>
         </div>
         <hr className="divisoria" />
         <div className="visu_info_linha">
           <h3>Data de Término</h3>
-          <p>{new Date(projeto.dataTermino).toLocaleDateString('pt-BR')}</p>
+          <p>{projeto.dataTermino}</p>
         </div>
       </div>
 
       {arquivos.length > 0 && (
         <div className="visu_container_info arquivo margem_10">
-          <div className="visu_arquivo_cima">
           <h2 className="visu_arquivo_titulo">Arquivos Anexados</h2>
-          <div className="visu_arquivo_dica">
-            <img src="/img/info.svg" />
-            <p>Clique em um arquivo para baixá-lo.</p>
-          </div>
-          </div>
           <div className="visu_arquivo_container">
             {ordenarArquivos(arquivos).map((arquivo: Arquivo) => (
               <ArquivoUpload
@@ -160,7 +154,7 @@ function VisualizacaoProjeto() {
                 tamanho={(arquivo.tamanho / 1024 / 1024).toFixed(2) + 'MB'}
                 link={arquivo.url}
                 tipo={formatarTipoDocumento(arquivo.tipoDocumento)}
-                onDownload={() => handleDownload(arquivo.url, arquivo.nome)} // Passa o nome do arquivo
+                onDownload={() => handleDownload(arquivo.nome)} // Passa apenas o nome do arquivo
               />
             ))}
           </div>
