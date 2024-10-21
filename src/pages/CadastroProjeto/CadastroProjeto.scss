@@ -123,3 +123,37 @@ textarea:focus {
     border-radius: 8px;
     color: #606060;
 }
+
+.cadpro_divisoria {
+    margin-top: 32px;
+    background-color: #C4C4C4;
+    height: 1px;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .cadpro_secao {
+        flex-wrap: wrap;
+    }
+
+    .cadpro_input.maior, .cadpro_input.menor {
+        width: 100%;
+    }
+
+    .cadpro_titulo_arquivo {
+        text-align: center;
+    }
+
+    .cadpro_botao_upload {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .cadpro_nenhum {
+        width: 100%;
+    }
+}

@@ -45,3 +45,19 @@
 .subarq_remove img {
     width: 16px;
 }
+
+@media only screen and (max-width: 768px) {
+
+    .subarq_mensagem {
+        width: 180px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+
+    .subarq_mensagem {
+        font-size: 0.75rem;
+        width: 128px;
+    }
+
+}

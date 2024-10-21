@@ -387,6 +387,8 @@ const removerArquivoTermosAditivos = (index: number) => {
           </div>
           </div>
 
+          <div className="cadpro_divisoria"> </div>
+
           {/* Seção de Contratos */}
           <div className="cadpro_secao_vertical_arquivo">
           <h2 className="cadpro_titulo_arquivo">Contratos</h2>
@@ -421,6 +423,8 @@ const removerArquivoTermosAditivos = (index: number) => {
               onClick={() => document.getElementById("input-file-upload-contratos")?.click()} />
           </div>
           </div>
+
+          <div className="cadpro_divisoria"> </div>
 
           {/* Seção de Termos Aditivos */}
           <div className="cadpro_secao_vertical_arquivo">
@@ -457,6 +461,9 @@ const removerArquivoTermosAditivos = (index: number) => {
           </div>
           </div>
         </div>
+
+        <div className="cadpro_divisoria"> </div>  
+
         {/* Botão de cadastrar */}
         <div className="cadpro_botao_cadastrar">
             <BotaoCTA
