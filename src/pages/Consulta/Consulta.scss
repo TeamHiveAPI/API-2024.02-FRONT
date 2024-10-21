@@ -70,15 +70,21 @@
 
 .cons_botao_pesquisa_container {
     display: flex;
+    flex-wrap: wrap;
     gap: 16px;
 }
 
 table {
-    width: 80%;
+    width: 100%;
     border-collapse: collapse;
     border-radius: 16px;
     overflow: hidden;
+}
+
+.cons_tabela {
+    overflow-x: auto;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
 }
 
 th, td {
@@ -180,7 +186,11 @@ table td:first-child {
 
 .th_botao {
     width: 11%;
-    min-width: 130px;
+    min-width: 128px;
+}
+
+.th_titulo {
+    min-width: 256px;
 }
 
 .th_referencia {
@@ -194,10 +204,12 @@ table td:first-child {
 
 .th_coordenador {
     width: 20%;
+    min-width: 128px;
 }
 
 .th_valor {
     width: 20%;
+    min-width: 128px;
 }
 
 .cons_admin {
@@ -209,4 +221,41 @@ table td:first-child {
     display: flex;
     flex-grow: 1;
     align-items: center;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 4px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #003383;
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .cons_tabela, table {
+        border-radius: 16px 16px 0px 0px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .cons_admin {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cons_admin_esq {
+        margin-bottom: 0px !important;
+    }
+
+    .cons_barra_pesquisa {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .mtop80 {
+        text-align: center;
+    }
 }

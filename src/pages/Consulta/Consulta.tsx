@@ -168,7 +168,8 @@ function Consulta() {
         </div>
       </div>
 
-      <table className="margem_10">
+      <div className="cons_tabela margem_10">
+      <table>
         <thead>
           <tr>
             <th className="th_botao"> </th>
@@ -205,6 +206,7 @@ function Consulta() {
           )}
         </tbody>
       </table>
+      </div>
     </>
   );
 }
