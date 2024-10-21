@@ -50,7 +50,7 @@ const SecaoCima = ({ titulo, admin, projetoID }: SecaoCimaProps) => {
     <div>
       <div className="secao_cima margem_10">
         <div className="secao_cima_titulo">
-        {location.pathname !== '/cadastro-projeto' && <p>ID {projetoID}</p>}
+        {projetoID && <p>ID {projetoID}</p>}
           <h2>{titulo}</h2>
         </div>
         <div className="secao_cima_botoes">
