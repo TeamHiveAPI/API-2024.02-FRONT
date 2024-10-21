@@ -85,3 +85,25 @@
 .visu_arquivo_dica img {
     width: 24px;
 }
+
+.visu_info_linha h3 {
+    min-width: 200px;
+}
+
+@media only screen and (max-width: 1024px) {
+
+    .visu_info_linha {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .visu_arquivo_cima {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .visu_arquivo_dica {
+        width: 100%;
+    }
+
+}
