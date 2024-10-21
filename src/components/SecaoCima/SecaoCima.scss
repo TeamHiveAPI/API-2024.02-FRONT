@@ -48,12 +48,28 @@
 
 @media only screen and (max-width: 768px) {
 
+    .secao_cima {
+        align-items: center;
+        text-align: center;
+    }
+
     .secao_cima_botoes {
-        flex-direction: column-reverse;
+        flex-wrap: wrap;
     }
 
     .visu_info_linha p {
         word-break: break-all;
     }
 
+    .secao_cima {
+        padding: 20px;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+    .secao_cima_botoes {
+        flex-direction: column;
+    }
 }

@@ -40,7 +40,7 @@ function Navbar() {
 
             <div className="nav_dir">
                 {isLoggedIn && (
-                    <img src="/img/foto_perfil_admin.svg" alt="Foto do Perfil" /> 
+                    <img className="nav_dir_img" src="/img/foto_perfil_admin.svg" alt="Foto do Perfil" /> 
                 )}
 
             <div className="nav_botao" onClick={isLoggedIn ? handleLogout : () => navigate("/login")}>
