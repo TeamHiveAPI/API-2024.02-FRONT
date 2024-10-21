@@ -58,3 +58,30 @@ footer button:hover {
     padding: 16px 64px;
     font-size: 14px;
 }
+
+@media only screen and (max-width: 1450px) {
+
+    .footer_cima {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .footer_dir {
+        justify-content: center;
+        flex-direction: column;
+        gap: 48px;
+    }
+
+    .footer_dir p {
+        width: 100%;
+        text-align: center;
+        margin-top: 32px;
+    }
+
+    .footer_baixo {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+}

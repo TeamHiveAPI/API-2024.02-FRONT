@@ -27,10 +27,6 @@
     gap: 32px;
 }
 
-.nav img {
-    width: 32px;
-}
-
 .nav_botao {
     display: flex;
     font-weight: 600;
@@ -50,4 +46,20 @@
     background-color: $cinza-claro;
     cursor: pointer;
     color: $primario-hover;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .nav_container {
+        padding: 16px 10%;
+    }
+
+    .nav_esq img {
+        width: 96px;
+    }
+
+    .nav_meio {
+        display: none;
+    }
+
 }

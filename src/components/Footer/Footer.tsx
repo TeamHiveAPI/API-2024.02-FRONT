@@ -3,7 +3,6 @@ import "./Footer.scss";
 
 function Footer() {
   
-  
   return (
     
    <footer>
@@ -29,6 +28,5 @@ function Footer() {
 
   );
 }
-
 
 export default Footer;
