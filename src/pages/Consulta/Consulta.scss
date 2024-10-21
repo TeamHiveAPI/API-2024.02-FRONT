@@ -223,11 +223,11 @@ table td:first-child {
     align-items: center;
 }
 
-::-webkit-scrollbar {
+.cons_tabela::-webkit-scrollbar {
     width: 12px;
     height: 4px;
 }
-::-webkit-scrollbar-thumb {
+.cons_tabela::-webkit-scrollbar-thumb {
     background-color: #003383;
     border-radius: 8px;
 }
